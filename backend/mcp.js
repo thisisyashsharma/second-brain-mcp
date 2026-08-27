@@ -177,7 +177,11 @@ function createMcpServer() {
 export function setupMcpServer(app) {
   // Authentication Middleware
   const requireAuth = (req, res, next) => {
-    // Simple local configuration bypass or explicit token check
+    // TODO: Implement proper OAuth or authentication for production before exposing sensitive/private data publicly.
+    // Bypassing MCP_AUTH_TOKEN check for the Claude custom connector demo, as Claude's UI expects OAuth and does not support arbitrary Bearer tokens.
+    
+    // Original auth logic (currently bypassed):
+    /*
     const expectedToken = process.env.MCP_AUTH_TOKEN;
     if (!expectedToken) {
       // If no token is configured, allow for local dev
@@ -187,7 +191,8 @@ export function setupMcpServer(app) {
     if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
       return res.status(401).json({ error: "Unauthorized MCP access" });
     }
-    next();
+    */
+    return next();
   };
 
   // Map to store active sessions (sessionId -> { server, transport })
