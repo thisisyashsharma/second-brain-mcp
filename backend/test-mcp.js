@@ -7,7 +7,7 @@ async function runTest() {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
   console.log("Connecting to local MCP Server using Streamable HTTP...");
-  const transport = new StreamableHTTPClientTransport(new URL("http://localhost:3001/mcp"), {
+  const transport = new StreamableHTTPClientTransport(new URL("https://second-brain-mcp-haok.onrender.com/mcp"), {
     requestInit: { headers }
   });
   
