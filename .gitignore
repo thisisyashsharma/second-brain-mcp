@@ -1,0 +1,13 @@
+# Ignores all node_modules folders anywhere in the directory tree
+node_modules/
+
+# Environment configurations (keeps your secrets safe)
+.env
+.env.local
+
+# Operating system metadata files
+.DS_Store
+Thumbs.db
+
+# Optional: If you want to keep test data/PDFs out of repository storage
+# test-brain/Finance/**/*.pdf

@@ -1,0 +1,36 @@
+{
+  "manifest_version": "0.3",
+  "name": "second-brain",
+  "display_name": "Second Brain",
+  "version": "1.0.0",
+  "description": "Connect Claude to your local Second Brain PostgreSQL knowledge base via MCP",
+  "author": {
+    "name": "Second Brain"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "MCP_SERVER_URL": "${user_config.mcp_server_url}",
+        "MCP_AUTH_TOKEN": "${user_config.mcp_auth_token}"
+      }
+    }
+  },
+  "user_config": {
+    "mcp_server_url": {
+      "type": "string",
+      "title": "MCP Server URL",
+      "description": "URL of your Second Brain MCP server (e.g. http://localhost:3001/mcp)",
+      "default": "http://localhost:3001/mcp"
+    },
+    "mcp_auth_token": {
+      "type": "string",
+      "title": "MCP Auth Token",
+      "description": "Authentication token for the MCP server (leave empty for local)",
+      "sensitive": true
+    }
+  }
+}
