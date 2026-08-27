@@ -11,3 +11,5 @@ Thumbs.db
 
 # Optional: If you want to keep test data/PDFs out of repository storage
 # test-brain/Finance/**/*.pdf
+
+test-brain/
