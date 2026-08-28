@@ -1,0 +1,2721 @@
+{
+  "document": {
+    "name": "Zomato_Annual_Report_2023-24.pdf",
+    "pages": 371,
+    "processed_range": "155-184"
+  },
+  "elements": [
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 155,
+      "content": "Zomato Limited ('Company')"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 155,
+      "content": "For Zomato Limited"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 155,
+      "content": "ANNEXURE - VII"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 156,
+      "content": "Zomato Limited ('Company')"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 156,
+      "content": "For Zomato Limited"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 156,
+      "content": "ANNEXURE - VIII"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "Independent Auditor's Report"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "To The Members of Zomato Limited Report  on  the  Audit  of  the  Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "Opinion"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "Basis for Opinion"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "Emphasis of Matter"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 157,
+      "content": "Key Audit Matters"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "Sr. No. Key Audit Matter"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "1 Fair valuation of investment in other entities"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "2. Revenue Recognition"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "Auditor's Response"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "Principal audit procedures performed:"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 158,
+      "content": "Principal audit procedures performed:"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 159,
+      "content": "Sr. No. Key Audit Matter"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 159,
+      "content": "3. Impairment Assessment of Goodwill"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 159,
+      "content": "Information Other than the Financial Statements and Auditor's Report Thereon"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 159,
+      "content": "Auditor's Response"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 159,
+      "content": "Principal audit procedures performed:"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 160,
+      "content": "Responsibilities of Management and Those Charged with Governance for the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 160,
+      "content": "Auditor's Responsibility for the Audit of the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 161,
+      "content": "Other Matters"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 162,
+      "content": "Report on Other Legal and Regulatory Requirements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 164,
+      "content": "Sr. No. Name of the company"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 164,
+      "content": "Nature of relationship"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 164,
+      "content": "Clause Number of CARO report with qualification or adverse remark"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_164_1",
+      "page": 164,
+      "extraction_method": "camelot_stream",
+      "docling_score": 0.6,
+      "final_score": 0.7,
+      "needs_review": true,
+      "rows": [
+        [
+          "Company Overview",
+          "Statutory Reports\nFinancial Statements: Consolidated"
+        ],
+        [
+          "of  an \nindependent  auditor\u2019s  system  and",
+          "and \nthird \nparty \naccounting \nsoftware"
+        ],
+        [
+          "organization  controls  report  covering  the",
+          "operated throughout the year for all relevant"
+        ],
+        [
+          "requirement  of  audit  trail  at  database  level,",
+          "transactions  recorded \nin  the  software  or"
+        ],
+        [
+          "we are unable to comment whether audit trail",
+          "whether there were any instances of the audit"
+        ],
+        [
+          "feature at the database level was enabled and",
+          "trail feature being tampered."
+        ],
+        [
+          "operated throughout the year for all relevant",
+          ""
+        ],
+        [
+          "",
+          "Further,  during  the  course  of  audit,  we  and"
+        ],
+        [
+          "transactions  recorded \nin  the  software  or",
+          ""
+        ],
+        [
+          "",
+          "the respective other auditors, whose reports"
+        ],
+        [
+          "whether there were any instances of the audit",
+          ""
+        ],
+        [
+          "",
+          "have been furnished to us by the Management"
+        ],
+        [
+          "trail feature been tampered with and",
+          ""
+        ],
+        [
+          "",
+          "of the Parent Company, have not come across"
+        ],
+        [
+          "(c) \nFor an accounting software, for maintenance",
+          "any instance of the audit trail feature being"
+        ],
+        [
+          "of  purchase  records  for  the  period  from",
+          "tampered with in respect of the accounting"
+        ],
+        [
+          "August  17,  2023,  operated  by  a  third  party",
+          "softwares for which the audit trail feature was"
+        ],
+        [
+          "software  service  provider,  in  the  absence",
+          "operating."
+        ],
+        [
+          "of  an \nindependent  auditor\u2019s  system  and",
+          ""
+        ],
+        [
+          "",
+          "vii.  With  respect  to  the  matters  specified \nin"
+        ],
+        [
+          "organization  controls  report  covering  the",
+          ""
+        ],
+        [
+          "",
+          "clause (xxi) of paragraph 3 and paragraph 4 of"
+        ],
+        [
+          "requirement  of  audit  trail  at  database  level,",
+          ""
+        ],
+        [
+          "",
+          "the Companies (Auditor\u2019s Report) Order, 2020"
+        ],
+        [
+          "we are unable to comment whether audit trail",
+          ""
+        ],
+        [
+          "",
+          "(\u201cCARO\u201d/  \u201cthe  Order\u201d)  issued  by  the  Central"
+        ],
+        [
+          "feature at the database level was enabled and",
+          ""
+        ],
+        [
+          "",
+          "Government  in  terms  of  Section  143(11)  of"
+        ],
+        [
+          "operated from August 17, 2023, for all relevant",
+          ""
+        ],
+        [
+          "",
+          "the  Act,  according  to  the  information  and"
+        ],
+        [
+          "transactions  recorded \nin  the  software  or",
+          ""
+        ],
+        [
+          "",
+          "explanations  given  to  us  and  based  on  the"
+        ],
+        [
+          "whether there were any instances of the audit",
+          ""
+        ],
+        [
+          "",
+          "CARO reports issued by us and the auditors"
+        ],
+        [
+          "trail feature been tampered with.",
+          ""
+        ],
+        [
+          "",
+          "of  respective  companies \nincluded \nin  the"
+        ],
+        [
+          "In respect of two subsidiaries, as reported by the",
+          "consolidated  financial  statements  to  which"
+        ],
+        [
+          "other auditors:",
+          "reporting under CARO is applicable, as provided"
+        ],
+        [
+          "",
+          "to  us  by  the  Management  of  the  Parent,  we"
+        ],
+        [
+          "(a) \nAudit trail for certain software was not enabled",
+          ""
+        ],
+        [
+          "",
+          "report  that  there  are  no  qualifications  or"
+        ],
+        [
+          "at the database level to log any direct changes",
+          ""
+        ],
+        [
+          "",
+          "adverse remarks by the respective auditors"
+        ],
+        [
+          "to the database. Further, during the course of",
+          ""
+        ],
+        [
+          "",
+          "in  the  CARO  reports  of  the  said  respective"
+        ],
+        [
+          "our audit we did not come across any instance",
+          ""
+        ],
+        [
+          "",
+          "companies \nincluded \nin  the  consolidated"
+        ],
+        [
+          "of audit trail feature being tampered with.",
+          ""
+        ],
+        [
+          "",
+          "financial statements except for the following:"
+        ],
+        [
+          "(b) \nWe  are  unable  to  comment  on  whether",
+          ""
+        ],
+        [
+          "audit  trail  feature  of  certain  subsystems",
+          ""
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 164,
+      "content": "For Deloitte Haskins & Sells"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 164,
+      "content": "Vikas Khurana"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 165,
+      "content": "Annexure 'A' to the Independent Auditor's Report"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 165,
+      "content": "Report on the Internal Financial Controls with reference to consolidated financial statements  under  Clause  (i)  of  Subsection 3 of Section 143 of the Companies Act, 2013 ('the Act')"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 165,
+      "content": "Management's Responsibility for Internal Financial Controls"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 165,
+      "content": "Auditor's Responsibility"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "Meaning of Internal Financial Controls with reference to consolidated financial statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "Inherent Limitations of Internal Financial Controls with reference to consolidated financial statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "Opinion"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "Other Matters"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "For Deloitte Haskins & Sells"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 166,
+      "content": "Vikas Khurana"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 167,
+      "content": "Consolidated Balance Sheet"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_167_2",
+      "page": 167,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "Note",
+          "As at March 31, 2024",
+          "As at March 31, 2023"
+        ],
+        [
+          "Assets",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Non-current assets",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Property, plant and equipment",
+          "3",
+          "287",
+          "209"
+        ],
+        [
+          "Capital work-in-progress",
+          "3",
+          "18",
+          "7"
+        ],
+        [
+          "Right-of-use asset",
+          "35",
+          "690",
+          "427"
+        ],
+        [
+          "Goodwill",
+          "4",
+          "4,717",
+          "4,717"
+        ],
+        [
+          "Other intangible assets",
+          "4",
+          "754",
+          "991"
+        ],
+        [
+          "Financial assets",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Investments",
+          "5",
+          "10,365",
+          "2,280"
+        ],
+        [
+          "Other financial assets",
+          "11",
+          "747",
+          "1,894"
+        ],
+        [
+          "Tax assets (net)",
+          "12",
+          "221",
+          "116"
+        ],
+        [
+          "Other non-current assets",
+          "13",
+          "99",
+          "127"
+        ],
+        [
+          "Total non-current assets",
+          "",
+          "17,898",
+          "10,768"
+        ],
+        [
+          "Current assets",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Inventories",
+          "14",
+          "88",
+          "83"
+        ],
+        [
+          "Financial assets",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Investments",
+          "6",
+          "1,280",
+          "4,485"
+        ],
+        [
+          "\u0007 Trade receivables",
+          "7",
+          "794",
+          "457"
+        ],
+        [
+          "\u0007 Cash and cash equivalents",
+          "8",
+          "309",
+          "218"
+        ],
+        [
+          "\u0007 Bank balances other than cash and cash equivalents",
+          "9",
+          "422",
+          "799"
+        ],
+        [
+          "\u0007 Loans",
+          "10",
+          "-",
+          "0"
+        ],
+        [
+          "\u0007 Other financial assets",
+          "11",
+          "2,324",
+          "4,418"
+        ],
+        [
+          "Other current assets",
+          "13",
+          "241",
+          "371"
+        ],
+        [
+          "Total current assets",
+          "",
+          "5,458",
+          "10,831"
+        ],
+        [
+          "Total assets",
+          "",
+          "23,356",
+          "21,599"
+        ],
+        [
+          "Equity and liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Equity",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Equity share capital",
+          "15 (a)",
+          "868",
+          "836"
+        ],
+        [
+          "Other equity",
+          "15 (b)",
+          "19,545",
+          "18,624"
+        ],
+        [
+          "Equity attributable to owners of the Parent",
+          "",
+          "20,413",
+          "19,460"
+        ],
+        [
+          "Non-controlling interests",
+          "",
+          "(7)",
+          "(7)"
+        ],
+        [
+          "Total equity",
+          "",
+          "20,406",
+          "19,453"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "Consolidated Balance Sheet (Contd.)"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "as at March 31, 2024"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "Akshant Goyal"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "Kaushik Dutta"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "Sandhya Sethia"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "(INR crores)"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_168_3",
+      "page": 168,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "Note",
+          "As at March 31, 2024",
+          "As at March 31, 2023"
+        ],
+        [
+          "Liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Non-current liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Financial liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Borrowings",
+          "16",
+          "-",
+          "6"
+        ],
+        [
+          "Lease liabilities",
+          "35",
+          "588",
+          "351"
+        ],
+        [
+          "Other financial liabilities",
+          "18",
+          "3",
+          "5"
+        ],
+        [
+          "Provisions",
+          "20",
+          "88",
+          "94"
+        ],
+        [
+          "Deferred tax liabilities",
+          "38",
+          "188",
+          "249"
+        ],
+        [
+          "Total non-current liabilities",
+          "",
+          "867",
+          "705"
+        ],
+        [
+          "Current liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Financial liabilities",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Borrowings",
+          "16",
+          "-",
+          "35"
+        ],
+        [
+          "Lease liabilities",
+          "35",
+          "161",
+          "115"
+        ],
+        [
+          "Trade payables",
+          "17",
+          "",
+          ""
+        ],
+        [
+          "a. \u0007 total outstanding dues of micro enterprises and small enterprises",
+          "",
+          "15",
+          "9"
+        ],
+        [
+          "b. \u0007 total outstanding dues of creditors other than micro enterprises and small enterprises",
+          "",
+          "871",
+          "670"
+        ],
+        [
+          "Other financial liabilities",
+          "18",
+          "644",
+          "310"
+        ],
+        [
+          "Other current liabilities",
+          "19",
+          "363",
+          "276"
+        ],
+        [
+          "Provisions",
+          "20",
+          "29",
+          "26"
+        ],
+        [
+          "Total current liabilities",
+          "",
+          "2,083",
+          "1,441"
+        ],
+        [
+          "Total liabilities",
+          "",
+          "2,950",
+          "2,146"
+        ],
+        [
+          "Total equity and liabilities",
+          "",
+          "23,356",
+          "21,599"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "For Deloitte Haskins & Sells"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 168,
+      "content": "Vikas Khurana"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 169,
+      "content": "Consolidated Statement of Profit and Loss"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_169_4",
+      "page": 169,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "Note",
+          "For the year ended March 31, 2024",
+          "(INR crores) For the year ended March 31, 2023"
+        ],
+        [
+          "Income",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Revenue from operations",
+          "21",
+          "12,114",
+          "7,079"
+        ],
+        [
+          "Other income",
+          "22",
+          "847",
+          "682"
+        ],
+        [
+          "Total income (I)",
+          "",
+          "12,961",
+          "7,761"
+        ],
+        [
+          "Expenses",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Purchases of stock-in-trade",
+          "23",
+          "2,887",
+          "1,438"
+        ],
+        [
+          "Changes in inventories of stock-in-trade",
+          "24",
+          "(5)",
+          "(43)"
+        ],
+        [
+          "Employee benefits expense",
+          "25",
+          "1,659",
+          "1,465"
+        ],
+        [
+          "Finance costs",
+          "26",
+          "72",
+          "49"
+        ],
+        [
+          "Depreciation and amortisation expenses",
+          "27",
+          "526",
+          "437"
+        ],
+        [
+          "Other expenses",
+          "28",
+          "7,531",
+          "5,429"
+        ],
+        [
+          "Total expenses (II)",
+          "",
+          "12,670",
+          "8,775"
+        ],
+        [
+          "Profit / (loss) before share of profit / (loss) of an associate, a joint venture, exceptional items and tax (III= I-II)",
+          "",
+          "291",
+          "(1,014)"
+        ],
+        [
+          "Share of profit / (loss) of an associate and a joint venture (IV)",
+          "",
+          "-",
+          "(1)"
+        ],
+        [
+          "Profit / (loss) before exceptional items and tax",
+          "",
+          "291",
+          "(1,015)"
+        ],
+        [
+          "(V=III+IV)",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Exceptional items (VI)",
+          "29",
+          "-",
+          "(0)"
+        ],
+        [
+          "Profit / (loss) before tax (VII= V-VI)",
+          "",
+          "291",
+          "(1,015)"
+        ],
+        [
+          "Tax expense :",
+          "38",
+          "",
+          ""
+        ],
+        [
+          "Current tax",
+          "",
+          "1",
+          "0"
+        ],
+        [
+          "Deferred tax",
+          "",
+          "(61)",
+          "(44)"
+        ],
+        [
+          "Total tax expense (VIII)",
+          "",
+          "(60)",
+          "(44)"
+        ],
+        [
+          "Profit / (loss) for the year (IX= VII-VIII)",
+          "",
+          "351",
+          "(971)"
+        ],
+        [
+          "Other comprehensive income / (loss)",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(a) Items that will not be reclassified to profit or loss:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 (i) \u0007 Remeasurements of the defined benefit plans",
+          "",
+          "3",
+          "4"
+        ],
+        [
+          "\u0007 (ii) \u0007 Equity instruments through other comprehensive income",
+          "",
+          "60",
+          "(111)"
+        ],
+        [
+          "\u0007 (iii) \u0007 Income tax relating to above",
+          "",
+          "-",
+          "-"
+        ],
+        [
+          "Subtotal (X)",
+          "",
+          "63",
+          "(107)"
+        ],
+        [
+          "(b) \u0007 Items that will be reclassified to profit or loss:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 (i) \u0007 Exchange differences on translation of foreign operations",
+          "",
+          "0",
+          "8"
+        ],
+        [
+          "\u0007 (ii) \u0007 Debt instruments through other comprehensive income",
+          "",
+          "(8)",
+          "0"
+        ],
+        [
+          "\u0007 (iii) Income tax relating to above",
+          "",
+          "-",
+          "-"
+        ],
+        [
+          "Subtotal (XI)",
+          "",
+          "(8)",
+          "8"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Consolidated Statement of Profit and Loss (Contd.)"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_170_5",
+      "page": 170,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "Note",
+          "For the year ended March 31, 2024",
+          "(INR crores) the year ended"
+        ],
+        [
+          "Other comprehensive income / (loss) for the year (XII = X+XI)",
+          "",
+          "55",
+          "(99)"
+        ],
+        [
+          "Total comprehensive income / (loss) for the year (XIII = IX+ XII)",
+          "",
+          "406",
+          "(1,070)"
+        ],
+        [
+          "Profit / (loss) for the year attributable to:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Owners of the Parent",
+          "",
+          "351",
+          "(971)"
+        ],
+        [
+          "\u0007 Non-controlling interest",
+          "",
+          "-",
+          "0"
+        ],
+        [
+          "",
+          "",
+          "351",
+          "(971)"
+        ],
+        [
+          "Other comprehensive income / (loss) for the year attributable to:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Owners of the Parent",
+          "",
+          "55",
+          "(99)"
+        ],
+        [
+          "\u0007 Non-controlling interest",
+          "",
+          "0",
+          "(0)"
+        ],
+        [
+          "",
+          "",
+          "55",
+          "(99)"
+        ],
+        [
+          "Total comprehensive income / (loss) for the year attributable to:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Owners of the Parent",
+          "",
+          "406",
+          "(1,070)"
+        ],
+        [
+          "\u0007 Non-controlling interest",
+          "",
+          "0",
+          "-"
+        ],
+        [
+          "",
+          "",
+          "406",
+          "(1,070)"
+        ],
+        [
+          "Earnings / (loss) per equity share (INR) (face value of INR 1 each)",
+          "",
+          "",
+          ""
+        ],
+        [
+          "(a) Basic",
+          "30",
+          "0.41",
+          "(1.20)"
+        ],
+        [
+          "(b) Diluted",
+          "30",
+          "0.40",
+          "(1.20)"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "For Deloitte Haskins & Sells"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Vikas Khurana"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Zomato Limited"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Deepinder Goyal"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Akshant Goyal"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Kaushik Dutta"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 170,
+      "content": "Sandhya Sethia"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 171,
+      "content": "Consolidated Statement of Change in Equity for the year ended March 31, 2024"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 171,
+      "content": "A. \t Equity Share Capital"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_171_6",
+      "page": 171,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          "836",
+          "3",
+          "",
+          "23",
+          "5",
+          "868"
+        ],
+        [
+          "8,36,39,75,413",
+          "3,25,03,548",
+          "23,37,70,426",
+          "5,00,05,651",
+          "8,68,02,55,038",
+          "Total outstanding (A-B)"
+        ],
+        [
+          "19",
+          "-",
+          "-",
+          "(5)",
+          "14",
+          "ESOP Trust shares) (B)"
+        ],
+        [
+          "18,95,34,357",
+          "-",
+          "-",
+          "(5,00,05,651)",
+          "13,95,28,706",
+          "Shares held by (Treasury"
+        ],
+        [
+          "855",
+          "3",
+          "23",
+          "-",
+          "882",
+          ""
+        ],
+        [
+          "8,55,35,09,770",
+          "3,25,03,548",
+          "23,37,70,426",
+          "-",
+          "8,81,97,83,744",
+          "Shares Issued (A)"
+        ],
+        [
+          "April 01, 2023",
+          "bonus shares issued during the year (pursuant to exercise of employee stock options)",
+          "shares issued on exercise of employee stock options",
+          "shares issued by ESOP Trust on exercise of",
+          "employee stock options March 31, 2024",
+          ""
+        ]
+      ]
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_171_7",
+      "page": 171,
+      "extraction_method": "camelot_stream",
+      "docling_score": 0.49999999999999994,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Equity shares of INR 1 each issued, subscribed and fully",
+          "Number",
+          "(INR crores)",
+          "Number",
+          "(INR crores)",
+          "Number",
+          "(INR crores)"
+        ],
+        [
+          "paid",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "As at April 01, 2023",
+          "8,55,35,09,770",
+          "855",
+          "18,95,34,357",
+          "19",
+          "8,36,39,75,413",
+          "836"
+        ],
+        [
+          "Add : bonus shares issued during the year (pursuant to",
+          "3,25,03,548",
+          "3",
+          "-",
+          "-",
+          "3,25,03,548",
+          "3"
+        ],
+        [
+          "exercise of employee stock options)",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Add: shares issued on exercise of employee stock options",
+          "23,37,70,426",
+          "23",
+          "-",
+          "-",
+          "23,37,70,426",
+          "23"
+        ],
+        [
+          "Less: shares issued by ESOP Trust on exercise of",
+          "-",
+          "-",
+          "(5,00,05,651)",
+          "(5)",
+          "5,00,05,651",
+          "5"
+        ],
+        [
+          "employee stock options",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "As at March 31, 2024",
+          "8,81,97,83,744",
+          "882",
+          "13,95,28,706",
+          "14",
+          "8,68,02,55,038",
+          "868"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 171,
+      "content": "Equity Share Capital"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 172,
+      "content": "Consolidated Statement of Change in Equity (Contd.) for the year ended March 31, 2024"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_172_8",
+      "page": 172,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        [
+          "Total Equity",
+          "",
+          "18,617",
+          "351",
+          "55",
+          "406",
+          "(1)",
+          "-",
+          "515",
+          "9",
+          "(0)",
+          "(5)",
+          "(3)",
+          "19,538"
+        ],
+        [
+          "Non-controlling interests",
+          "",
+          "(7)",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(7)"
+        ],
+        [
+          "",
+          "Remeasurements of the defined benefit plans",
+          "(6)",
+          "-",
+          "3",
+          "3",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(3)"
+        ],
+        [
+          "Foreign currency translation reserve",
+          "",
+          "37",
+          "-",
+          "0",
+          "0",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "37"
+        ],
+        [
+          "Parent Debt instruments",
+          "through other comprehensive income",
+          "0",
+          "-",
+          "(8)",
+          "(8)",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(8)"
+        ],
+        [
+          "Equity attributable to owners of the Other equity",
+          "Equity instruments through other comprehensive income",
+          "74",
+          "-",
+          "60",
+          "60",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "134"
+        ],
+        [
+          "Treasury shares",
+          "",
+          "19",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(5)",
+          "-",
+          "14"
+        ],
+        [
+          "Retained earnings",
+          "(7,509)",
+          "",
+          "351",
+          "-",
+          "351",
+          "-",
+          "1,125",
+          "-",
+          "9",
+          "(0)",
+          "-",
+          "-",
+          "(6,024)"
+        ],
+        [
+          "Securities premium",
+          "",
+          "24,713",
+          "-",
+          "-",
+          "-",
+          "(1)",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(3)",
+          "24,709"
+        ],
+        [
+          "Share- based payment reserve",
+          "1,293",
+          "",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(1,125)",
+          "515",
+          "-",
+          "-",
+          "-",
+          "-",
+          "683"
+        ],
+        [
+          "Capital reserve",
+          "3",
+          "",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "3"
+        ],
+        [
+          "Description",
+          "",
+          "As at April 01, 2023",
+          "Profit for the year",
+          "Other comprehensive income / (loss)",
+          "Total comprehensive income/ (loss)",
+          "Less: transaction cost on issue of shares",
+          "Add/ (less): transfer on account of exercise of employee stock options",
+          "Add: share based payment expense",
+          "Add: amount collected by ESOP Trust on exercise of employee stock options (net of tax)",
+          "Less: share based payment on cash settlement of option (fractional",
+          "Less: shares issued by ESOP Trust on exercise of employee stock options",
+          "Less: bonus issue of equity shares",
+          "As at March 31, 2024"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 173,
+      "content": "Consolidated Statement of Change in Equity (Contd.) for the year ended March 31, 2024"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 173,
+      "content": "B.\t Other equity"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_173_9",
+      "page": 173,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Total",
+          "15,735",
+          "(971)",
+          "",
+          "(99)",
+          "(1,070)",
+          "175",
+          "-",
+          "506",
+          "7",
+          "3,422",
+          "(175)",
+          "(0)",
+          "(4)"
+        ],
+        [
+          "Non-controlling interests",
+          "",
+          "(7)",
+          "0",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "",
+          "Remeasurements of the defined benefit plans",
+          "(10)",
+          "-",
+          "4",
+          "4",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "",
+          "Foreign currency translation reserve",
+          "29",
+          "-",
+          "8",
+          "8",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "Parent",
+          "Debt instruments through other comprehensive income",
+          "-",
+          "-",
+          "0",
+          "0",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "the equity holders of the Other equity",
+          "Equity instruments through other comprehensive income",
+          "10",
+          "-",
+          "(111)",
+          "(111)",
+          "175",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "the equity holders of the Other equity",
+          "Treasury shares",
+          "23",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(4)"
+        ],
+        [
+          "the equity holders of the Other equity",
+          "Retained earnings",
+          "(6,730)",
+          "(971)",
+          "-",
+          "(971)",
+          "-",
+          "360",
+          "-",
+          "7",
+          "-",
+          "(175)",
+          "(0)",
+          "-"
+        ],
+        [
+          "the equity holders of the Other equity",
+          "Securities premium",
+          "21,292",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "3,422",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "",
+          "Share- based payment reserve",
+          "1,125",
+          "-",
+          "-",
+          "-",
+          "-",
+          "(360)",
+          "506",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "",
+          "Capital reserve",
+          "3",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-",
+          "-"
+        ],
+        [
+          "Description",
+          "",
+          "As at April 01, 2022",
+          "Loss for the year",
+          "Other comprehensive income / (loss)",
+          "Total comprehensive income/ (loss)",
+          "Add: transfer to retained earnings (refer note 36)",
+          "Add/ (less): transfer on account of exercise of employee stock options",
+          "Add: share based payment expense",
+          "Add: amount collected by ESOP Trust on exercise of employee stock options (net of tax)",
+          "Add: premium on issue of equity shares",
+          "Less: transfer from other comprehensive income (refer note 36)",
+          "Less: share based payment on cash settlement of option (fractional shares)",
+          "Less: shares issued by ESOP Trust on exercise of employee stock"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 174,
+      "content": "Consolidated Statement of Change in Equity (Contd.)"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_174_10",
+      "page": 174,
+      "extraction_method": "camelot_stream",
+      "docling_score": 0.7,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "For Deloitte Haskins & Sells",
+          "",
+          "For and on behalf of the Board of Directors of Zomato Limited",
+          "",
+          ""
+        ],
+        [
+          "Firm registration number: 015125N",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Chartered Accountants",
+          "",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Sd/-",
+          "Sd/-",
+          "Sd/-",
+          "Sd/-",
+          "Sd/-"
+        ],
+        [
+          "Vikas Khurana",
+          "Deepinder Goyal",
+          "Kaushik Dutta",
+          "Akshant Goyal",
+          "Sandhya Sethia"
+        ],
+        [
+          "Partner",
+          "(Managing Director and",
+          "(Chairman and",
+          "(Chief Financial Officer)",
+          "(Company Secretary)"
+        ],
+        [
+          "Membership No. 503760",
+          "Chief Executive Officer)",
+          "Independent Director)",
+          "(PAN No. AIVPG9914G)",
+          "(A-29579)"
+        ],
+        [
+          "",
+          "(DIN-02613583)",
+          "(DIN-03328890)",
+          "",
+          ""
+        ],
+        [
+          "Place: Gurugram",
+          "Place: Gurugram",
+          "Place: Gurugram",
+          "Place: Gurugram",
+          "Place: Gurugram"
+        ],
+        [
+          "Date: May 13, 2024",
+          "Date: May 13, 2024",
+          "Date: May 13, 2024",
+          "Date: May 13, 2024",
+          "Date: May 13, 2024"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 175,
+      "content": "Consolidated Statement of Cash Flows"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_175_11",
+      "page": 175,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "For the year ended March 31, 2024",
+          "For the year ended March 31, 2023"
+        ],
+        [
+          "A) Cash flows from operating activities",
+          "",
+          ""
+        ],
+        [
+          "Profit / (loss) before tax",
+          "291",
+          "(1,015)"
+        ],
+        [
+          "Adjustments to reconcile profit / (loss) before tax to net cash flows:",
+          "",
+          ""
+        ],
+        [
+          "Liabilities written back",
+          "(9)",
+          "(28)"
+        ],
+        [
+          "Depreciation on property, plant and equipment and depreciation on right-of-use assets",
+          "284",
+          "181"
+        ],
+        [
+          "Amortisation on intangible assets",
+          "242",
+          "256"
+        ],
+        [
+          "Provision for doubtful debts and advances",
+          "68",
+          "30"
+        ],
+        [
+          "Bad debts written-off",
+          "1",
+          "1"
+        ],
+        [
+          "Gain on termination of lease contracts",
+          "(10)",
+          "(8)"
+        ],
+        [
+          "Share-based payment expense",
+          "515",
+          "506"
+        ],
+        [
+          "(Profit)/ loss on sale of property, plant and equipment (net)",
+          "1",
+          "(1)"
+        ],
+        [
+          "Net gain on mutual funds",
+          "(129)",
+          "(91)"
+        ],
+        [
+          "Share in (profit) / loss of associate / joint venture",
+          "-",
+          "1"
+        ],
+        [
+          "Interest income on government securities",
+          "(107)",
+          "(67)"
+        ],
+        [
+          "Interest income on debentures or bonds",
+          "(320)",
+          "(0)"
+        ],
+        [
+          "Amortisation of premium / (discount) on government securities",
+          "(41)",
+          "14"
+        ],
+        [
+          "Amortisation of premium / (discount) on bonds",
+          "0",
+          "-"
+        ],
+        [
+          "Interest expense",
+          "2",
+          "5"
+        ],
+        [
+          "Gain on disposal of investment",
+          "(1)",
+          "(0)"
+        ],
+        [
+          "Interest on lease liabilities",
+          "67",
+          "41"
+        ],
+        [
+          "Interest income on bank deposits and others",
+          "(220)",
+          "(457)"
+        ],
+        [
+          "Interest income on income tax refund",
+          "(1)",
+          "(5)"
+        ],
+        [
+          "Operating profit / (loss) before working capital changes",
+          "633",
+          "(637)"
+        ],
+        [
+          "Movements in working capital :",
+          "",
+          ""
+        ],
+        [
+          "- Trade receivables",
+          "(348)",
+          "(203)"
+        ],
+        [
+          "- Other financial assets",
+          "(293)",
+          "(198)"
+        ],
+        [
+          "- Other assets",
+          "134",
+          "(4)"
+        ],
+        [
+          "- Inventory",
+          "(5)",
+          "(43)"
+        ],
+        [
+          "- Financial liabilities and other liabilities",
+          "419",
+          "318"
+        ],
+        [
+          "- Provisions",
+          "0",
+          "25"
+        ],
+        [
+          "- Trade payables",
+          "211",
+          "(71)"
+        ],
+        [
+          "Cash generated from / (used in) operations",
+          "751",
+          "(813)"
+        ],
+        [
+          "Income taxes refund / (paid) (net)",
+          "(105)",
+          "(31)"
+        ],
+        [
+          "Net cash generated from / (used in) operating activities (A)",
+          "646",
+          "(844)"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 176,
+      "content": "Consolidated Statement of Cash Flows (Contd.)"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_176_12",
+      "page": 176,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "For the year ended March 31, 2024",
+          "(INR crores) For the year ended March 31, 2023"
+        ],
+        [
+          "B) \u0007 Cash flows from investing activities",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Purchase of property, plant and equipment (including capital work-in-progress, capital advances and capital creditors)",
+          "(215)",
+          "(103)"
+        ],
+        [
+          "\u0007 Proceeds from sale of property, plant and equipment",
+          "13",
+          "2"
+        ],
+        [
+          "\u0007 Investments in bank deposits (having maturity of more than 3 months)",
+          "(1,944)",
+          "(5,433)"
+        ],
+        [
+          "\u0007 Proceeds from maturity of bank deposits (having maturity of more than 3 months)",
+          "5,938",
+          "8,721"
+        ],
+        [
+          "\u0007 Proceeds from redemption of mutual fund units",
+          "29,509",
+          "12,649"
+        ],
+        [
+          "\u0007 Investment in mutual fund units",
+          "(27,010)",
+          "(14,443)"
+        ],
+        [
+          "\u0007 Sale of non current investments",
+          "1",
+          "-"
+        ],
+        [
+          "\u0007 Investment in government securities",
+          "(2,420)",
+          "(565)"
+        ],
+        [
+          "\u0007 Proceeds from maturity of government securities",
+          "935",
+          "-"
+        ],
+        [
+          "\u0007 Investment in debentures or bonds",
+          "(5,772)",
+          "(50)"
+        ],
+        [
+          "\u0007 Consideration paid for acquisition of warehousing division of HOTPL",
+          "-",
+          "(61)"
+        ],
+        [
+          "\u0007 Loan given",
+          "-",
+          "(750)"
+        ],
+        [
+          "\u0007 Loan received back",
+          "0",
+          "-"
+        ],
+        [
+          "\u0007 Interest received",
+          "618",
+          "490"
+        ],
+        [
+          "Net cash generated from / (used in) investing activities (B)",
+          "(347)",
+          "457"
+        ],
+        [
+          "C) Cash flows from financing activities",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Proceeds from issue of equity shares",
+          "23",
+          "4"
+        ],
+        [
+          "\u0007 Borrowing repaid during the year",
+          "(40)",
+          "(23)"
+        ],
+        [
+          "\u0007 Transaction cost paid on issue of shares",
+          "(1)",
+          "(0)"
+        ],
+        [
+          "\u0007 Share based payment on cash settlement of option (fractional shares)",
+          "(0)",
+          "(0)"
+        ],
+        [
+          "\u0007 Amount collected by ESOP trust on exercise of employee stock options (net of tax)",
+          "9",
+          "7"
+        ],
+        [
+          "\u0007 Payment of principal portion of lease liabilities",
+          "(129)",
+          "(65)"
+        ],
+        [
+          "\u0007 Payment of interest portion of lease liabilities",
+          "(67)",
+          "(41)"
+        ],
+        [
+          "\u0007 Interest expense",
+          "(2)",
+          "(9)"
+        ],
+        [
+          "\u0007 Net cash generated / from (used in) financing activities (C)",
+          "(207)",
+          "(127)"
+        ],
+        [
+          "\u0007 Net increase/ (decrease) in cash and cash equivalents (A+B+C)",
+          "92",
+          "(514)"
+        ],
+        [
+          "\u0007 Cash and cash equivalents acquired through business combination",
+          "-",
+          "339"
+        ],
+        [
+          "\u0007 Net foreign exchange difference",
+          "(1)",
+          "1"
+        ],
+        [
+          "\u0007 Cash and cash equivalents at beginning of the year",
+          "218",
+          "392"
+        ],
+        [
+          "\u0007 Cash and cash equivalents as at end of the year",
+          "309",
+          "218"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Consolidated Statement of Cash Flows (Contd.)"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_177_13",
+      "page": 177,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Particulars",
+          "For the year ended March 31, 2024",
+          "(INR crores) For the year ended March 31, 2023"
+        ],
+        [
+          "Cash and cash equivalents comprise of :",
+          "",
+          ""
+        ],
+        [
+          "\u0007 Balances with banks:",
+          "",
+          ""
+        ],
+        [
+          "\u0007 \u0007 - In current accounts",
+          "268",
+          "213"
+        ],
+        [
+          "\u0007 \u0007 - Deposits with original maturity of less than three months",
+          "39",
+          "5"
+        ],
+        [
+          "\u0007 Cash on hand",
+          "2",
+          "0"
+        ],
+        [
+          "",
+          "309",
+          "218"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "For Deloitte Haskins & Sells"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Vikas Khurana"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Deepinder Goyal"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Akshant Goyal"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Kaushik Dutta"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 177,
+      "content": "Sandhya Sethia"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "1 Corporate Information"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "2 Basis of Preparation of consolidated financial statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "2.1\tBasis of preparation"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "2.2\t Basis of consolidation"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 178,
+      "content": "Subsidiaries:"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 179,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 179,
+      "content": "Investment in associates and joint ventures Associate"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 179,
+      "content": "Joint Venture"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 180,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 180,
+      "content": "2.3\t Summary of material accounting policies \u0007"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 180,
+      "content": "a) \t Use of estimates"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 180,
+      "content": "b) \tBusiness combination and goodwill"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 180,
+      "content": "Business combinations (other than common control business combinations) - Acquisition Method"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 181,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 181,
+      "content": "c) \t Current versus non- current classification"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 181,
+      "content": "d) \tForeign currencies"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 181,
+      "content": "Transactions and balances"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 182,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 182,
+      "content": "Foreign operations"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 182,
+      "content": "e) \t Fair value measurement"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 183,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 183,
+      "content": "f) \t Property, plant and equipment"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_183_14",
+      "page": 183,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Property, plant and equipment",
+          "Useful lives as per Schedule II",
+          "Useful lives estimated by management"
+        ],
+        [
+          "Air Conditioner",
+          "5 years",
+          "1-5 years"
+        ],
+        [
+          "Electrical Equipments",
+          "10 years",
+          "1-5 years"
+        ],
+        [
+          "Furniture & Fittings",
+          "10 years",
+          "1-5 years"
+        ],
+        [
+          "Computers",
+          "3 years",
+          "1-3 years"
+        ],
+        [
+          "Plant and Machinery",
+          "15 years",
+          "1 -10 years"
+        ],
+        [
+          "Motor Vehicles",
+          "8 years",
+          "5-8 years"
+        ],
+        [
+          "Telephone Instruments",
+          "5 years",
+          "2 years"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 183,
+      "content": "g)\t Goodwill and other intangible assets"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 184,
+      "content": "Material Accounting Policies to the Consolidated Financial Statements"
+    },
+    {
+      "type": "table",
+      "table_id": "tbl_184_15",
+      "page": 184,
+      "extraction_method": "docling",
+      "docling_score": 1.0,
+      "final_score": 1.0,
+      "needs_review": false,
+      "rows": [
+        [
+          "Nature of assets",
+          "Life"
+        ],
+        [
+          "Brand",
+          "2-5 years"
+        ],
+        [
+          "Customer contracts and relationship",
+          "1 -10 years"
+        ],
+        [
+          "Distribution network",
+          "5 years"
+        ],
+        [
+          "Technology platform",
+          "5 years"
+        ],
+        [
+          "Content/ reviews",
+          "5 years"
+        ],
+        [
+          "Trademarks",
+          "5 years"
+        ],
+        [
+          "Restaurant listing platform",
+          "6 years"
+        ],
+        [
+          "Non-Compete",
+          "2-5 years"
+        ],
+        [
+          "Domain/ Website",
+          "3 years"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 184,
+      "content": "h) \t Leases"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 184,
+      "content": "Group as a lessee"
+    },
+    {
+      "type": "text",
+      "label": "section_header",
+      "page": 184,
+      "content": "Right of use assets"
+    }
+  ]
+}

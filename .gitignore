@@ -13,3 +13,4 @@ Thumbs.db
 # test-brain/Finance/**/*.pdf
 
 test-brain/
+/docs

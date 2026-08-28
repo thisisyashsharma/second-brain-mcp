@@ -72,18 +72,90 @@ export function safeTruncate(text, maxLen) {
   return text.slice(0, maxLen) + "\n...(truncated)";
 }
 
-/**
- * Searches wiki concepts and raw documents using the keyword scoring logic.
- * Returns scored and sorted top concepts and documents.
- */
-export async function searchKnowledge(query) {
+const FINANCIAL_TERMS = [
+  "financial statements",
+  "balance sheet",
+  "statement of profit and loss",
+  "cash flow statement",
+  "notes to accounts",
+  "borrowings",
+  "revenue",
+  "total assets",
+  "total liabilities",
+  "profit/(loss)",
+  "profit / (loss)",
+  "financial highlights"
+];
+
+export function getBestExcerpt(text, keywords, phrases) {
+  if (!text) return "";
+  const allTerms = [...keywords, ...phrases].filter(k => k.length > 2);
+  if (allTerms.length === 0) return text.substring(0, 2000).trim();
+
+  const regexPattern = allTerms.map(escapeRegex).join('|');
+  const regex = new RegExp(regexPattern, 'gi');
+  
+  let match;
+  const windows = [];
+  let matchCount = 0;
+  
+  while ((match = regex.exec(text)) !== null && matchCount < 100) {
+    const targetIdx = match.index;
+    
+    let start = Math.max(0, targetIdx - 300);
+    let end = Math.min(text.length, targetIdx + 1200);
+    
+    const prevNewline = text.lastIndexOf('\n', targetIdx);
+    if (prevNewline !== -1 && prevNewline >= start) {
+      start = prevNewline + 1;
+    } else {
+      const nextSpace = text.indexOf(' ', start);
+      if (nextSpace !== -1 && nextSpace < targetIdx) start = nextSpace + 1;
+    }
+
+    const nextNewline = text.indexOf('\n', end);
+    if (nextNewline !== -1 && nextNewline - end < 300) {
+      end = nextNewline;
+    } else {
+      const prevSpace = text.lastIndexOf(' ', end);
+      if (prevSpace !== -1 && prevSpace > targetIdx) end = prevSpace;
+    }
+    
+    let excerpt = text.substring(start, end).trim();
+    let score = 0;
+    const lowerExcerpt = excerpt.toLowerCase();
+    
+    for (const term of allTerms) {
+      const termRegex = new RegExp(escapeRegex(term), 'gi');
+      const matches = excerpt.match(termRegex);
+      if (matches) score += matches.length * (term.includes(' ') ? 2 : 1);
+    }
+    
+    for (const term of FINANCIAL_TERMS) {
+      if (lowerExcerpt.includes(term)) {
+        score += 10;
+      }
+    }
+    
+    windows.push({ excerpt, score, index: match.index });
+    matchCount++;
+  }
+  
+  if (windows.length === 0) return text.substring(0, 1500).trim();
+  
+  windows.sort((a, b) => b.score - a.score || a.index - b.index);
+  return windows[0].excerpt;
+}
+
+export async function searchKnowledge(query, allowedTiers = [3]) {
   const keywords = extractKeywords(query);
   const phrases = extractPhrases(query);
 
   if (keywords.length === 0) {
-    return { scoredConcepts: [], scoredDocs: [], keywords, phrases };
+    return { scoredConcepts: [], scoredDocs: [], scoredSections: [], scoredTables: [], keywords, phrases };
   }
 
+  // Concepts: Assume public/Tier 3 for legacy concepts unless specified
   const conceptsResult = await pool.query("SELECT id, name, slug, summary, content FROM wiki_concepts");
   const scoredConcepts = conceptsResult.rows
     .map((c) => ({
@@ -95,14 +167,16 @@ export async function searchKnowledge(query) {
     .slice(0, TOP_K_CONCEPTS);
 
   const ilikeKeywords = keywords.map(kw => `%${kw}%`);
-  const regexPattern = keywords.map(escapeRegex).join('|');
 
-  const docsResult = await pool.query(`
-    SELECT id, filename, filepath, filetype, 
-           SUBSTRING(content FROM GREATEST(1, regexp_instr(content, $2, 1, 1, 0, 'i') - 500) FOR 4000) AS content
-    FROM documents
-    WHERE content ILIKE ANY($1)
-  `, [ilikeKeywords, regexPattern]);
+  // Legacy Documents: Default to Tier 1 since they lack granular sections
+  let docsResult = { rows: [] };
+  if (allowedTiers.includes(1)) {
+    docsResult = await pool.query(`
+      SELECT id, filename, filepath, filetype, content
+      FROM documents
+      WHERE content ILIKE ANY($1)
+    `, [ilikeKeywords]);
+  }
 
   const scoredDocs = docsResult.rows
     .map((d) => ({
@@ -111,9 +185,52 @@ export async function searchKnowledge(query) {
     }))
     .filter((d) => d.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, TOP_K_DOCUMENTS);
+    .slice(0, TOP_K_DOCUMENTS)
+    .map((d) => ({
+      ...d,
+      content: getBestExcerpt(d.content || "", keywords, phrases)
+    }));
 
-  return { scoredConcepts, scoredDocs, keywords, phrases };
+  // Document Sections
+  const sectionsResult = await pool.query(`
+    SELECT ds.id, ds.section_title, ds.tier, ds.content, d.filename, d.filepath
+    FROM document_sections ds
+    JOIN documents d ON d.id = ds.document_id
+    WHERE ds.tier = ANY($1) AND (ds.content ILIKE ANY($2) OR ds.section_title ILIKE ANY($2))
+  `, [allowedTiers, ilikeKeywords]);
+
+  const scoredSections = sectionsResult.rows
+    .map((s) => ({
+      ...s,
+      score: scoreText(s.content || "", s.section_title + " " + s.filename, keywords, phrases),
+    }))
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, TOP_K_DOCUMENTS)
+    .map((s) => ({
+      ...s,
+      content: getBestExcerpt(s.content || "", keywords, phrases)
+    }));
+    
+  // Document Tables
+  const tablesResult = await pool.query(`
+    SELECT dt.id, dt.table_title, dt.tier, dt.headers, dt.rows, d.filename, ds.section_title
+    FROM document_tables dt
+    JOIN documents d ON d.id = dt.document_id
+    LEFT JOIN document_sections ds ON ds.id = dt.section_id
+    WHERE dt.tier = ANY($1) AND (dt.table_title ILIKE ANY($2) OR dt.headers::text ILIKE ANY($2) OR dt.rows::text ILIKE ANY($2))
+  `, [allowedTiers, ilikeKeywords]);
+  
+  const scoredTables = tablesResult.rows
+    .map((t) => ({
+      ...t,
+      score: scoreText(JSON.stringify(t.rows) + " " + JSON.stringify(t.headers), t.table_title + " " + t.filename, keywords, phrases),
+    }))
+    .filter((t) => t.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  return { scoredConcepts, scoredDocs, scoredSections, scoredTables, keywords, phrases };
 }
 
 /**

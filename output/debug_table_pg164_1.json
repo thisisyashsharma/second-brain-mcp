@@ -1,0 +1,277 @@
+{
+  "docling_grid": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      "1",
+      "Tonguestun Food Network Private Limited",
+      "U55101KA2012PTC066805",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "2",
+      "Zomato Entertainment Private Limited",
+      "U74999DL2018PTC342569",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "3",
+      "Zomato Foods Private Limited",
+      "U73100DL2020PTC369324",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "4",
+      "Zomato Local Services Private Limited",
+      "U74900DL2019PTC351669",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "5",
+      "Zomato Payments Private Limited",
+      "U74999DL2021PTC384703",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "6",
+      "Zomato Hyperpure Private Limited",
+      "U74900DL2015PTC286208",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "7",
+      "Zomato Financial Services Limited",
+      "U65929DL2022PLC394322",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ],
+    [
+      "8",
+      "Blink Commerce Private Limited",
+      "U74140HR2015FTC055568",
+      "Subsidiary",
+      "Clause 3(xvii)"
+    ]
+  ],
+  "docling_score": 0.6,
+  "reasons": [
+    "High cell fragmentation (many single-character cells)"
+  ],
+  "final_selected": [
+    [
+      "Company Overview",
+      "Statutory Reports\nFinancial Statements: Consolidated"
+    ],
+    [
+      "of  an \nindependent  auditor\u2019s  system  and",
+      "and \nthird \nparty \naccounting \nsoftware"
+    ],
+    [
+      "organization  controls  report  covering  the",
+      "operated throughout the year for all relevant"
+    ],
+    [
+      "requirement  of  audit  trail  at  database  level,",
+      "transactions  recorded \nin  the  software  or"
+    ],
+    [
+      "we are unable to comment whether audit trail",
+      "whether there were any instances of the audit"
+    ],
+    [
+      "feature at the database level was enabled and",
+      "trail feature being tampered."
+    ],
+    [
+      "operated throughout the year for all relevant",
+      ""
+    ],
+    [
+      "",
+      "Further,  during  the  course  of  audit,  we  and"
+    ],
+    [
+      "transactions  recorded \nin  the  software  or",
+      ""
+    ],
+    [
+      "",
+      "the respective other auditors, whose reports"
+    ],
+    [
+      "whether there were any instances of the audit",
+      ""
+    ],
+    [
+      "",
+      "have been furnished to us by the Management"
+    ],
+    [
+      "trail feature been tampered with and",
+      ""
+    ],
+    [
+      "",
+      "of the Parent Company, have not come across"
+    ],
+    [
+      "(c) \nFor an accounting software, for maintenance",
+      "any instance of the audit trail feature being"
+    ],
+    [
+      "of  purchase  records  for  the  period  from",
+      "tampered with in respect of the accounting"
+    ],
+    [
+      "August  17,  2023,  operated  by  a  third  party",
+      "softwares for which the audit trail feature was"
+    ],
+    [
+      "software  service  provider,  in  the  absence",
+      "operating."
+    ],
+    [
+      "of  an \nindependent  auditor\u2019s  system  and",
+      ""
+    ],
+    [
+      "",
+      "vii.  With  respect  to  the  matters  specified \nin"
+    ],
+    [
+      "organization  controls  report  covering  the",
+      ""
+    ],
+    [
+      "",
+      "clause (xxi) of paragraph 3 and paragraph 4 of"
+    ],
+    [
+      "requirement  of  audit  trail  at  database  level,",
+      ""
+    ],
+    [
+      "",
+      "the Companies (Auditor\u2019s Report) Order, 2020"
+    ],
+    [
+      "we are unable to comment whether audit trail",
+      ""
+    ],
+    [
+      "",
+      "(\u201cCARO\u201d/  \u201cthe  Order\u201d)  issued  by  the  Central"
+    ],
+    [
+      "feature at the database level was enabled and",
+      ""
+    ],
+    [
+      "",
+      "Government  in  terms  of  Section  143(11)  of"
+    ],
+    [
+      "operated from August 17, 2023, for all relevant",
+      ""
+    ],
+    [
+      "",
+      "the  Act,  according  to  the  information  and"
+    ],
+    [
+      "transactions  recorded \nin  the  software  or",
+      ""
+    ],
+    [
+      "",
+      "explanations  given  to  us  and  based  on  the"
+    ],
+    [
+      "whether there were any instances of the audit",
+      ""
+    ],
+    [
+      "",
+      "CARO reports issued by us and the auditors"
+    ],
+    [
+      "trail feature been tampered with.",
+      ""
+    ],
+    [
+      "",
+      "of  respective  companies \nincluded \nin  the"
+    ],
+    [
+      "In respect of two subsidiaries, as reported by the",
+      "consolidated  financial  statements  to  which"
+    ],
+    [
+      "other auditors:",
+      "reporting under CARO is applicable, as provided"
+    ],
+    [
+      "",
+      "to  us  by  the  Management  of  the  Parent,  we"
+    ],
+    [
+      "(a) \nAudit trail for certain software was not enabled",
+      ""
+    ],
+    [
+      "",
+      "report  that  there  are  no  qualifications  or"
+    ],
+    [
+      "at the database level to log any direct changes",
+      ""
+    ],
+    [
+      "",
+      "adverse remarks by the respective auditors"
+    ],
+    [
+      "to the database. Further, during the course of",
+      ""
+    ],
+    [
+      "",
+      "in  the  CARO  reports  of  the  said  respective"
+    ],
+    [
+      "our audit we did not come across any instance",
+      ""
+    ],
+    [
+      "",
+      "companies \nincluded \nin  the  consolidated"
+    ],
+    [
+      "of audit trail feature being tampered with.",
+      ""
+    ],
+    [
+      "",
+      "financial statements except for the following:"
+    ],
+    [
+      "(b) \nWe  are  unable  to  comment  on  whether",
+      ""
+    ],
+    [
+      "audit  trail  feature  of  certain  subsystems",
+      ""
+    ]
+  ]
+}

@@ -80,14 +80,18 @@ function createMcpServer() {
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
+    
+    // Parse allowed tiers from env (defaults to [3] for safety)
+    const allowedTiersStr = process.env.MCP_ALLOWED_TIERS || "3";
+    const allowedTiers = allowedTiersStr.split(",").map(s => parseInt(s.trim()));
 
     if (name === "search_knowledge") {
       const { query } = args;
       if (!query) throw new Error("Query is required");
 
-      const { scoredConcepts, scoredDocs } = await searchKnowledge(query);
+      const { scoredConcepts, scoredDocs, scoredSections, scoredTables } = await searchKnowledge(query, allowedTiers);
 
-      let resultText = `Search Results for: "${query}"\n\n`;
+      let resultText = `Search Results for: "${query}" (Allowed Tiers: ${allowedTiers.join(", ")})\n\n`;
 
       if (scoredConcepts.length > 0) {
         resultText += `--- WIKI CONCEPTS ---\n`;
@@ -97,14 +101,28 @@ function createMcpServer() {
       }
 
       if (scoredDocs.length > 0) {
-        resultText += `--- RAW DOCUMENTS ---\n`;
+        resultText += `--- RAW DOCUMENTS (Legacy) ---\n`;
         scoredDocs.forEach(d => {
-          resultText += `Path: ${d.filepath}\nExcerpt: ${safeTruncate(d.content, 500)}\n\n`;
+          resultText += `Path: ${d.filepath}\nExcerpt: ${safeTruncate(d.content, 2000)}\n\n`;
         });
       }
 
-      if (scoredConcepts.length === 0 && scoredDocs.length === 0) {
-        resultText += "No relevant concepts or documents found.";
+      if (scoredSections && scoredSections.length > 0) {
+        resultText += `--- DOCUMENT SECTIONS ---\n`;
+        scoredSections.forEach(s => {
+          resultText += `Section: ${s.section_title} [Tier ${s.tier}]\nDocument: ${s.filename}\nExcerpt: ${safeTruncate(s.content, 2000)}\n\n`;
+        });
+      }
+
+      if (scoredTables && scoredTables.length > 0) {
+        resultText += `--- DOCUMENT TABLES ---\n`;
+        scoredTables.forEach(t => {
+          resultText += `Table: ${t.table_title} [Tier ${t.tier}]\nSection: ${t.section_title}\nDocument: ${t.filename}\nHeaders: ${JSON.stringify(t.headers)}\n\n`;
+        });
+      }
+
+      if (scoredConcepts.length === 0 && scoredDocs.length === 0 && (!scoredSections || scoredSections.length === 0) && (!scoredTables || scoredTables.length === 0)) {
+        resultText += "No relevant concepts, documents, sections, or tables found.";
       }
 
       return {

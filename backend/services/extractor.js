@@ -47,13 +47,38 @@ async function extractPdf(filePath) {
   const pdfParse = await loadPdfParse();
   const buffer = await fs.readFile(filePath);
   const data = await pdfParse(buffer);
-  return data.text || "";
+  return normalizePdfText(data.text || "");
 }
 
 async function extractPdfBuffer(buffer) {
   const pdfParse = await loadPdfParse();
   const data = await pdfParse(buffer);
-  return data.text || "";
+  return normalizePdfText(data.text || "");
+}
+
+/**
+ * Normalizes PDF extracted text:
+ * - Fixes CR/LF to \n
+ * - Trims whitespace-only lines
+ * - Compresses horizontal spaces
+ * - Compresses 3+ consecutive newlines to exactly 2 (preserving paragraph breaks)
+ */
+function normalizePdfText(text) {
+  if (!text) return "";
+  
+  // 1. Normalize line endings
+  let normalized = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  
+  // 2. Remove whitespace-only lines (leaves empty lines as just \n)
+  normalized = normalized.replace(/^[ \t]+$/gm, "");
+  
+  // 3. Replace multiple horizontal spaces with a single space
+  normalized = normalized.replace(/[ \t]{2,}/g, " ");
+  
+  // 4. Reduce repeated blank lines to a maximum of 2 newlines (preserves paragraphs/tables)
+  normalized = normalized.replace(/\n{3,}/g, "\n\n");
+  
+  return normalized.trim();
 }
 
 /** Lazy-load pdf-parse to avoid its test-file issue on import. */
