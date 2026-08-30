@@ -75,7 +75,7 @@ def process_pdf(pdf_path, output_dir, page_range_str=None, debug=False):
             
             pipeline_options = PdfPipelineOptions()
             pipeline_options.do_ocr = False
-            pipeline_options.do_table_structure = True
+            pipeline_options.do_table_structure = False
             pipeline_options.generate_page_images = False
             pipeline_options.generate_picture_images = False
             

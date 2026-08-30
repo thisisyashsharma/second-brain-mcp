@@ -58,11 +58,12 @@ export function scoreText(text, boostText, keywords, phrases) {
   let score = 0;
 
   for (const kw of keywords) {
-    score += countWord(nt, kw);          // content: 1x
-    score += countWord(nb, kw) * 10;     // boost field: 10x
+    score += Math.min(countWord(nt, kw), 10);        // content: 1x (capped at 10)
+    score += countWord(nb, kw) * 50;                // boost field: 50x
   }
   for (const ph of phrases) {
-    score += countPhrase(nt, ph) * 8;    // phrase: 8x
+    score += Math.min(countPhrase(nt, ph), 5) * 8;  // phrase in content: 8x (capped at 5)
+    score += countPhrase(nb, ph) * 80;              // phrase in title/boost: 80x
   }
   return score;
 }
@@ -218,13 +219,13 @@ export async function searchKnowledge(query, allowedTiers = [3]) {
     FROM document_tables dt
     JOIN documents d ON d.id = dt.document_id
     LEFT JOIN document_sections ds ON ds.id = dt.section_id
-    WHERE dt.tier = ANY($1) AND (dt.table_title ILIKE ANY($2) OR dt.headers::text ILIKE ANY($2) OR dt.rows::text ILIKE ANY($2))
+    WHERE dt.tier = ANY($1) AND (ds.section_title ILIKE ANY($2) OR dt.table_title ILIKE ANY($2) OR dt.headers::text ILIKE ANY($2) OR dt.rows::text ILIKE ANY($2))
   `, [allowedTiers, ilikeKeywords]);
   
   const scoredTables = tablesResult.rows
     .map((t) => ({
       ...t,
-      score: scoreText(JSON.stringify(t.rows) + " " + JSON.stringify(t.headers), t.table_title + " " + t.filename, keywords, phrases),
+      score: scoreText(JSON.stringify(t.rows) + " " + JSON.stringify(t.headers), (t.section_title || "") + " " + t.table_title + " " + t.filename, keywords, phrases),
     }))
     .filter((t) => t.score > 0)
     .sort((a, b) => b.score - a.score)

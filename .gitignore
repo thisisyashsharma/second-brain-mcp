@@ -14,3 +14,10 @@ Thumbs.db
 
 test-brain/
 /docs
+output/
+test-brain/
+venv/
+.env
+__pycache__/
+*.dump
+*.mcpb

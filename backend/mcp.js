@@ -117,7 +117,7 @@ function createMcpServer() {
       if (scoredTables && scoredTables.length > 0) {
         resultText += `--- DOCUMENT TABLES ---\n`;
         scoredTables.forEach(t => {
-          resultText += `Table: ${t.table_title} [Tier ${t.tier}]\nSection: ${t.section_title}\nDocument: ${t.filename}\nHeaders: ${JSON.stringify(t.headers)}\n\n`;
+          resultText += `Table: ${t.table_title} [Tier ${t.tier}]\nSection: ${t.section_title}\nDocument: ${t.filename}\nHeaders: ${JSON.stringify(t.headers)}\nRows: ${JSON.stringify(t.rows)}\n\n`;
         });
       }
 
