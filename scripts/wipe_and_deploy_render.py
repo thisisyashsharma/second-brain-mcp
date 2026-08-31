@@ -3,12 +3,16 @@ import json
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
+# Ensure UTF-8 output encoding on Windows
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 def wipe_and_deploy(db_url):
-    print(f"\n=======================================================")
-    print(f"       RENDER POSTGRESQL CLEAN WIPE & DEPLOYMENT       ")
-    print(f"=======================================================")
+    print("\n=======================================================")
+    print("       RENDER POSTGRESQL CLEAN WIPE & DEPLOYMENT       ")
+    print("=======================================================")
     
-    print(f"\n1. Connecting to Render PostgreSQL...")
+    print("\n1. Connecting to Render PostgreSQL...")
     conn = psycopg2.connect(db_url)
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
@@ -89,7 +93,7 @@ def wipe_and_deploy(db_url):
 
     conn.close()
     print("\n=======================================================")
-    print("  RENDER POSTGRESQL IS FULLY CLEANED & REDEPLOYED!  ")
+    print("   RENDER POSTGRESQL IS FULLY CLEANED & REDEPLOYED!    ")
     print("=======================================================\n")
 
 if __name__ == "__main__":
