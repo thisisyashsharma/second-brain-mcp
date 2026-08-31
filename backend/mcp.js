@@ -12,13 +12,21 @@ import {
   getDocumentByPath,
   safeTruncate,
   MAX_DOCUMENT_CONTEXT_CHARS,
+  listEconomicIndicatorsAndEntities,
+  getDocumentTocAndSections,
+  getIndicatorTimeseries,
+  compareCountryMetrics,
+  crossReferenceMacroWithMicro,
+  traceConceptGraph,
+  auditMetricDiscrepancy,
+  saveAnalyticalBrief,
 } from "./services/knowledge.js";
 
 function createMcpServer() {
   const server = new Server(
     {
       name: "SecondBrain-MCP",
-      version: "1.0.0",
+      version: "2.0.0",
     },
     {
       capabilities: {
@@ -30,9 +38,41 @@ function createMcpServer() {
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
       tools: [
+        // ── Discovery & Grounding Tools ──────────────────────────────────
+        {
+          name: "list_economic_indicators_and_entities",
+          description: "Discover all indexed countries, macroeconomic indicators, and documents available in the Second Brain database.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              type: {
+                type: "string",
+                enum: ["all", "countries", "indicators", "documents"],
+                description: "Type of entities to list (defaults to 'all')",
+              },
+              filter: {
+                type: "string",
+                description: "Optional keyword to filter country or indicator names",
+              },
+            },
+          },
+        },
+        {
+          name: "get_document_toc_and_sections",
+          description: "Get the Table of Contents, section hierarchy, page ranges, and tier security classifications for a document.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              documentId: { type: "number", description: "Optional document ID" },
+              filepath: { type: "string", description: "Optional relative filepath" },
+            },
+          },
+        },
+
+        // ── Search & Knowledge Retrieval Tools ───────────────────────────
         {
           name: "search_knowledge",
-          description: "Search the existing PostgreSQL-backed Second Brain for wiki concepts and raw documents.",
+          description: "Search the PostgreSQL-backed Second Brain for wiki concepts, raw documents, sections, and tables within allowed tiers.",
           inputSchema: {
             type: "object",
             properties: {
@@ -54,7 +94,7 @@ function createMcpServer() {
         },
         {
           name: "get_related_concepts",
-          description: "Query wiki_relationships for a given concept.",
+          description: "Query wiki_relationships for direct connections to a given concept.",
           inputSchema: {
             type: "object",
             properties: {
@@ -74,6 +114,103 @@ function createMcpServer() {
             required: ["path"],
           },
         },
+
+        // ── Quantitative & Analytical Tools ──────────────────────────────
+        {
+          name: "get_indicator_timeseries",
+          description: "Fetch clean year-by-year time-series data for a country and indicator from structured tables, with automated CAGR and growth analytics.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              country: { type: "string", description: "Country name or code (e.g. 'Angola', 'India', 'AGO')" },
+              indicator: { type: "string", description: "Indicator name or keyword (e.g. 'External debt', 'GDP', 'Inflation')" },
+              startYear: { type: "number", description: "Optional start year filter (e.g. 2000)" },
+              endYear: { type: "number", description: "Optional end year filter (e.g. 2023)" },
+            },
+            required: ["country", "indicator"],
+          },
+        },
+        {
+          name: "compare_country_metrics",
+          description: "Compare an economic metric across multiple countries with automated ranking, growth percentage, and benchmarking.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              countries: {
+                type: "array",
+                items: { type: "string" },
+                description: "Array of country names or codes (e.g. ['India', 'Brazil', 'Angola'])",
+              },
+              indicator: { type: "string", description: "Indicator to benchmark (e.g. 'External debt stocks', 'GDP')" },
+              year: { type: "number", description: "Optional specific year for comparison" },
+              startYear: { type: "number", description: "Optional start year for trend comparison" },
+              endYear: { type: "number", description: "Optional end year for trend comparison" },
+            },
+            required: ["countries", "indicator"],
+          },
+        },
+
+        // ── Synthesis, Graph & Auditing Tools ────────────────────────────
+        {
+          name: "cross_reference_macro_with_micro",
+          description: "Cross-reference macroeconomic indicators (World Bank) with corporate financial statements (e.g. Zomato costs, borrowings) to synthesize economic impact.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              macroQuery: { type: "string", description: "Macroeconomic factor/indicator (e.g. 'Inflation consumer prices', 'External debt')" },
+              microQuery: { type: "string", description: "Micro/corporate query or keyword (e.g. 'Zomato delivery expenses', 'Borrowings')" },
+            },
+            required: ["macroQuery", "microQuery"],
+          },
+        },
+        {
+          name: "trace_concept_graph",
+          description: "Traverse multi-hop relationships in the knowledge graph starting from a root concept to uncover causal and conceptual paths.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              conceptName: { type: "string", description: "Root concept name (e.g. 'Attention', 'External Debt')" },
+              depth: { type: "number", description: "Max traversal depth (1 to 4, default 2)" },
+            },
+            required: ["conceptName"],
+          },
+        },
+        {
+          name: "audit_metric_discrepancy",
+          description: "Audit data consistency and provenance across security tiers (Tier 1 Audited vs Tier 2 Operational vs Tier 3 Public).",
+          inputSchema: {
+            type: "object",
+            properties: {
+              entity: { type: "string", description: "Company, country, or entity name" },
+              metric: { type: "string", description: "Metric or financial term to audit" },
+            },
+            required: ["metric"],
+          },
+        },
+        {
+          name: "save_analytical_brief",
+          description: "Persist an analytical brief, synthesized research, or multi-step reasoning into the Second Brain PostgreSQL knowledge graph.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              title: { type: "string", description: "Title of the research brief / concept" },
+              slug: { type: "string", description: "Optional URL-friendly slug" },
+              summary: { type: "string", description: "Executive summary of the findings" },
+              content: { type: "string", description: "Full analytical content and step-by-step reasoning (Markdown)" },
+              relatedConcepts: {
+                type: "array",
+                items: { type: "string" },
+                description: "Names of existing concepts to link to in the knowledge graph",
+              },
+              sourceDocumentPaths: {
+                type: "array",
+                items: { type: "string" },
+                description: "Relative filepaths of source documents used in the analysis",
+              },
+            },
+            required: ["title", "content"],
+          },
+        },
       ],
     };
   });
@@ -85,6 +222,28 @@ function createMcpServer() {
     const allowedTiersStr = process.env.MCP_ALLOWED_TIERS || "3";
     const allowedTiers = allowedTiersStr.split(",").map(s => parseInt(s.trim()));
 
+    // ── 1. list_economic_indicators_and_entities ────────────────────────
+    if (name === "list_economic_indicators_and_entities") {
+      const data = await listEconomicIndicatorsAndEntities(args || {});
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 2. get_document_toc_and_sections ────────────────────────────────
+    if (name === "get_document_toc_and_sections") {
+      const data = await getDocumentTocAndSections({
+        documentId: args?.documentId,
+        filepath: args?.filepath,
+        allowedTiers,
+      });
+      if (!data) return { content: [{ type: "text", text: "Document not found." }] };
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 3. search_knowledge ─────────────────────────────────────────────
     if (name === "search_knowledge") {
       const { query } = args;
       if (!query) throw new Error("Query is required");
@@ -130,6 +289,7 @@ function createMcpServer() {
       };
     }
 
+    // ── 4. get_concept ──────────────────────────────────────────────────
     if (name === "get_concept") {
       const { name: conceptName } = args;
       if (!conceptName) throw new Error("Concept name is required");
@@ -151,6 +311,7 @@ function createMcpServer() {
       };
     }
 
+    // ── 5. get_related_concepts ─────────────────────────────────────────
     if (name === "get_related_concepts") {
       const { name: conceptName } = args;
       if (!conceptName) throw new Error("Concept name is required");
@@ -168,6 +329,7 @@ function createMcpServer() {
       };
     }
 
+    // ── 6. get_document ─────────────────────────────────────────────────
     if (name === "get_document") {
       const { path } = args;
       if (!path) throw new Error("Document path is required");
@@ -186,11 +348,91 @@ function createMcpServer() {
       };
     }
 
+    // ── 7. get_indicator_timeseries ─────────────────────────────────────
+    if (name === "get_indicator_timeseries") {
+      const data = await getIndicatorTimeseries({
+        country: args.country,
+        indicator: args.indicator,
+        startYear: args.startYear,
+        endYear: args.endYear,
+        allowedTiers,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 8. compare_country_metrics ──────────────────────────────────────
+    if (name === "compare_country_metrics") {
+      const data = await compareCountryMetrics({
+        countries: args.countries,
+        indicator: args.indicator,
+        year: args.year,
+        startYear: args.startYear,
+        endYear: args.endYear,
+        allowedTiers,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 9. cross_reference_macro_with_micro ─────────────────────────────
+    if (name === "cross_reference_macro_with_micro") {
+      const data = await crossReferenceMacroWithMicro({
+        macroQuery: args.macroQuery,
+        microQuery: args.microQuery,
+        allowedTiers,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 10. trace_concept_graph ─────────────────────────────────────────
+    if (name === "trace_concept_graph") {
+      const data = await traceConceptGraph({
+        conceptName: args.conceptName,
+        depth: args.depth,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 11. audit_metric_discrepancy ────────────────────────────────────
+    if (name === "audit_metric_discrepancy") {
+      const data = await auditMetricDiscrepancy({
+        entity: args.entity,
+        metric: args.metric,
+        allowedTiers,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 12. save_analytical_brief ───────────────────────────────────────
+    if (name === "save_analytical_brief") {
+      const data = await saveAnalyticalBrief({
+        title: args.title,
+        slug: args.slug,
+        summary: args.summary,
+        content: args.content,
+        relatedConcepts: args.relatedConcepts,
+        sourceDocumentPaths: args.sourceDocumentPaths,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
     throw new Error(`Tool not found: ${name}`);
   });
 
   return server;
 }
+
 
 export function setupMcpServer(app) {
   // Authentication Middleware
