@@ -223,7 +223,8 @@ function createMcpServer() {
     const allowedTiersStr = process.env.MCP_ALLOWED_TIERS || "3";
     const allowedTiers = allowedTiersStr.split(",").map(s => parseInt(s.trim()));
 
-    // ── 1. list_economic_indicators_and_entities ────────────────────────
+    try {
+      // ── 1. list_economic_indicators_and_entities ────────────────────────
     if (name === "list_economic_indicators_and_entities") {
       const data = await listEconomicIndicatorsAndEntities(args || {});
       return {
@@ -429,6 +430,18 @@ function createMcpServer() {
     }
 
     throw new Error(`Tool not found: ${name}`);
+  } catch (err) {
+      console.error(`MCP Tool execution error [${name}]:`, err.message);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Tool Execution Error in '${name}': ${err.message}`,
+          },
+        ],
+        isError: true,
+      };
+    }
   });
 
   return server;

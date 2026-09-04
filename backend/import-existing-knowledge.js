@@ -16,7 +16,16 @@ const KNOWLEDGE_DIR = process.env.KNOWLEDGE_DIR
   ? path.resolve(process.cwd(), process.env.KNOWLEDGE_DIR)
   : path.resolve(__dirname, "..", "knowledge");
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const dbUrl = process.env.DATABASE_URL || "";
+const isRemoteDb =
+  dbUrl.includes("render.com") ||
+  dbUrl.includes("supabase.co") ||
+  (!dbUrl.includes("localhost") && !dbUrl.includes("127.0.0.1") && dbUrl.startsWith("postgres"));
+
+const pool = new pg.Pool({
+  connectionString: dbUrl,
+  ssl: isRemoteDb || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+});
 
 async function discoverFiles(dir, base = dir) {
   let entries;

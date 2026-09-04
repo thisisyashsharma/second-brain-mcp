@@ -177,8 +177,50 @@ async function runTests() {
           const tools = toolsData?.result?.tools || [];
           console.log(`  [PASS] Successfully retrieved ${tools.length} database tools via OAuth!`);
           tools.slice(0, 5).forEach((t) => console.log(`         - ${t.name}`));
-          if (tools.length > 5) console.log(`         ... and ${tools.length - 5} more tools.`);
           testsPassed++;
+
+          // ── Test 7: Call a Tool via Authenticated Session ─────────────────
+          console.log("\n[Test 7] Executing tool 'list_economic_indicators_and_entities' via OAuth session...");
+          totalTests = 7;
+          const callRes = await fetch(`${BASE_URL}/mcp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${accessToken}`,
+              "mcp-session-id": sessionId,
+              "Accept": "application/json, text/event-stream"
+            },
+            body: JSON.stringify({
+              jsonrpc: "2.0",
+              id: 3,
+              method: "tools/call",
+              params: {
+                name: "list_economic_indicators_and_entities",
+                arguments: { type: "countries" }
+              }
+            })
+          });
+
+          if (callRes.status === 200) {
+            const rawCall = await callRes.text();
+            let callData = null;
+            try {
+              callData = JSON.parse(rawCall);
+            } catch {
+              const match = rawCall.match(/data:\s*(\{.*\})/);
+              if (match) callData = JSON.parse(match[1]);
+            }
+            if (callData?.result?.isError) {
+              console.error(`  [FAIL] Tool returned error: ${callData.result.content?.[0]?.text}`);
+            } else {
+              console.log("  [PASS] Tool executed successfully!");
+              const text = callData?.result?.content?.[0]?.text || "";
+              console.log(`         Response preview: ${text.substring(0, 100).replace(/\n/g, " ")}...`);
+              testsPassed++;
+            }
+          } else {
+            console.error(`  [FAIL] Tool execution HTTP status: ${callRes.status}`);
+          }
         } else {
           console.error(`  [FAIL] Failed to list tools: ${toolsRes.status}`);
         }
