@@ -16,13 +16,16 @@ CREATE TABLE IF NOT EXISTS documents (
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Compiled wiki concepts
+-- Compiled wiki concepts & entities (Unified Node Model)
 CREATE TABLE IF NOT EXISTS wiki_concepts (
   id            SERIAL PRIMARY KEY,
   name          TEXT NOT NULL,
   slug          TEXT NOT NULL UNIQUE,
   summary       TEXT,
   content       TEXT,
+  type          TEXT NOT NULL DEFAULT 'concept',
+  tier          INTEGER NOT NULL DEFAULT 3,
+  metadata      JSONB DEFAULT '{}'::jsonb,
   created_at    TIMESTAMPTZ DEFAULT NOW(),
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );
@@ -37,12 +40,14 @@ CREATE TABLE IF NOT EXISTS wiki_sources (
   UNIQUE(concept_id, document_id)
 );
 
--- Relationships between concepts
+-- Relationships between concepts & entities
 CREATE TABLE IF NOT EXISTS wiki_relationships (
   id                  SERIAL PRIMARY KEY,
   source_concept_id   INTEGER NOT NULL REFERENCES wiki_concepts(id) ON DELETE CASCADE,
   target_concept_id   INTEGER NOT NULL REFERENCES wiki_concepts(id) ON DELETE CASCADE,
   relationship        TEXT NOT NULL,
+  tier                INTEGER NOT NULL DEFAULT 3,
+  metadata            JSONB DEFAULT '{}'::jsonb,
   created_at          TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(source_concept_id, target_concept_id, relationship)
 );
@@ -81,10 +86,13 @@ CREATE INDEX IF NOT EXISTS idx_documents_filename       ON documents(filename);
 CREATE INDEX IF NOT EXISTS idx_documents_status         ON documents(compilation_status);
 CREATE INDEX IF NOT EXISTS idx_concepts_slug            ON wiki_concepts(slug);
 CREATE INDEX IF NOT EXISTS idx_concepts_name            ON wiki_concepts(name);
+CREATE INDEX IF NOT EXISTS idx_concepts_type            ON wiki_concepts(type);
+CREATE INDEX IF NOT EXISTS idx_concepts_tier            ON wiki_concepts(tier);
 CREATE INDEX IF NOT EXISTS idx_sources_concept          ON wiki_sources(concept_id);
 CREATE INDEX IF NOT EXISTS idx_sources_document         ON wiki_sources(document_id);
 CREATE INDEX IF NOT EXISTS idx_relations_source         ON wiki_relationships(source_concept_id);
 CREATE INDEX IF NOT EXISTS idx_relations_target         ON wiki_relationships(target_concept_id);
+CREATE INDEX IF NOT EXISTS idx_relationships_tier       ON wiki_relationships(tier);
 CREATE INDEX IF NOT EXISTS idx_sections_document_id     ON document_sections(document_id);
 CREATE INDEX IF NOT EXISTS idx_sections_tier            ON document_sections(tier);
 CREATE INDEX IF NOT EXISTS idx_tables_document_id       ON document_tables(document_id);

@@ -156,8 +156,11 @@ export async function searchKnowledge(query, allowedTiers = [3]) {
     return { scoredConcepts: [], scoredDocs: [], scoredSections: [], scoredTables: [], keywords, phrases };
   }
 
-  // Concepts: Assume public/Tier 3 for legacy concepts unless specified
-  const conceptsResult = await pool.query("SELECT id, name, slug, summary, content FROM wiki_concepts");
+  // Concepts & Entities: Enforce security tier filtering
+  const conceptsResult = await pool.query(
+    "SELECT id, name, slug, summary, content, type, tier, metadata FROM wiki_concepts WHERE tier = ANY($1)",
+    [allowedTiers]
+  );
   const scoredConcepts = conceptsResult.rows
     .map((c) => ({
       ...c,
@@ -192,12 +195,16 @@ export async function searchKnowledge(query, allowedTiers = [3]) {
       content: getBestExcerpt(d.content || "", keywords, phrases)
     }));
 
-  // Document Sections
+  // Document Sections (Fast indexed candidates)
   const sectionsResult = await pool.query(`
     SELECT ds.id, ds.section_title, ds.tier, ds.content, d.filename, d.filepath
     FROM document_sections ds
     JOIN documents d ON d.id = ds.document_id
-    WHERE ds.tier = ANY($1) AND (ds.content ILIKE ANY($2) OR ds.section_title ILIKE ANY($2))
+    WHERE ds.tier = ANY($1) AND (ds.section_title ILIKE ANY($2) OR ds.content ILIKE ANY($2))
+    ORDER BY 
+      CASE WHEN ds.section_title ILIKE ANY($2) THEN 1 ELSE 2 END,
+      ds.id ASC
+    LIMIT 30
   `, [allowedTiers, ilikeKeywords]);
 
   const scoredSections = sectionsResult.rows
@@ -213,19 +220,21 @@ export async function searchKnowledge(query, allowedTiers = [3]) {
       content: getBestExcerpt(s.content || "", keywords, phrases)
     }));
     
-  // Document Tables
+  // Document Tables (Fast candidate matching on country/indicator titles)
   const tablesResult = await pool.query(`
     SELECT dt.id, dt.table_title, dt.tier, dt.headers, dt.rows, d.filename, ds.section_title
     FROM document_tables dt
     JOIN documents d ON d.id = dt.document_id
     LEFT JOIN document_sections ds ON ds.id = dt.section_id
-    WHERE dt.tier = ANY($1) AND (ds.section_title ILIKE ANY($2) OR dt.table_title ILIKE ANY($2) OR dt.headers::text ILIKE ANY($2) OR dt.rows::text ILIKE ANY($2))
+    WHERE dt.tier = ANY($1) AND (ds.section_title ILIKE ANY($2) OR dt.table_title ILIKE ANY($2))
+    ORDER BY dt.id ASC
+    LIMIT 30
   `, [allowedTiers, ilikeKeywords]);
   
   const scoredTables = tablesResult.rows
     .map((t) => ({
       ...t,
-      score: scoreText(JSON.stringify(t.rows) + " " + JSON.stringify(t.headers), (t.section_title || "") + " " + t.table_title + " " + t.filename, keywords, phrases),
+      score: scoreText((t.section_title || "") + " " + t.table_title, (t.section_title || "") + " " + t.table_title + " " + t.filename, keywords, phrases),
     }))
     .filter((t) => t.score > 0)
     .sort((a, b) => b.score - a.score)
@@ -315,7 +324,7 @@ function slugify(text) {
 /**
  * 1. List indexed countries, economic indicators, and document entities.
  */
-export async function listEconomicIndicatorsAndEntities({ type = "all", filter = "" } = {}) {
+export async function listEconomicIndicatorsAndEntities({ type = "all", filter = "", allowedTiers = [1, 2, 3] } = {}) {
   const filterClause = filter ? `%${filter}%` : null;
   
   let countries = [];
@@ -326,13 +335,13 @@ export async function listEconomicIndicatorsAndEntities({ type = "all", filter =
     const q = filterClause
       ? `SELECT DISTINCT substring(section_title from 'World Bank: ([^-]+) -') as country 
          FROM document_sections 
-         WHERE section_title LIKE 'World Bank:%' AND section_title ILIKE $1 
+         WHERE section_title LIKE 'World Bank:%' AND section_title ILIKE $1 AND tier = ANY($2)
          ORDER BY country NULLS LAST LIMIT 100`
       : `SELECT DISTINCT substring(section_title from 'World Bank: ([^-]+) -') as country 
          FROM document_sections 
-         WHERE section_title LIKE 'World Bank:%' 
+         WHERE section_title LIKE 'World Bank:%' AND tier = ANY($1)
          ORDER BY country NULLS LAST LIMIT 100`;
-    const res = await pool.query(q, filterClause ? [filterClause] : []);
+    const res = await pool.query(q, filterClause ? [filterClause, allowedTiers] : [allowedTiers]);
     countries = res.rows.map(r => r.country).filter(Boolean);
   }
 
@@ -340,21 +349,21 @@ export async function listEconomicIndicatorsAndEntities({ type = "all", filter =
     const q = filterClause
       ? `SELECT DISTINCT substring(section_title from ' - (.*)') as indicator 
          FROM document_sections 
-         WHERE section_title LIKE '% - %' AND section_title ILIKE $1 
+         WHERE section_title LIKE '% - %' AND section_title ILIKE $1 AND tier = ANY($2)
          ORDER BY indicator NULLS LAST LIMIT 100`
       : `SELECT DISTINCT substring(section_title from ' - (.*)') as indicator 
          FROM document_sections 
-         WHERE section_title LIKE '% - %' 
+         WHERE section_title LIKE '% - %' AND tier = ANY($1)
          ORDER BY indicator NULLS LAST LIMIT 100`;
-    const res = await pool.query(q, filterClause ? [filterClause] : []);
+    const res = await pool.query(q, filterClause ? [filterClause, allowedTiers] : [allowedTiers]);
     indicators = res.rows.map(r => r.indicator).filter(Boolean);
   }
 
   if (type === "all" || type === "documents") {
     const q = filterClause
-      ? `SELECT id, filename, filepath, filetype, created_at FROM documents WHERE filename ILIKE $1 OR filepath ILIKE $1 LIMIT 50`
-      : `SELECT id, filename, filepath, filetype, created_at FROM documents LIMIT 50`;
-    const res = await pool.query(q, filterClause ? [filterClause] : []);
+      ? `SELECT id, filename, filepath, filetype, created_at FROM documents WHERE (filename ILIKE $1 OR filepath ILIKE $1) AND 1 = ANY($2) LIMIT 50`
+      : `SELECT id, filename, filepath, filetype, created_at FROM documents WHERE 1 = ANY($1) LIMIT 50`;
+    const res = await pool.query(q, filterClause ? [filterClause, allowedTiers] : [allowedTiers]);
     documents = res.rows;
   }
 
@@ -646,69 +655,326 @@ export async function crossReferenceMacroWithMicro({ macroQuery, microQuery, all
 }
 
 /**
- * 6. Multi-hop recursive graph traversal for concept causality.
+ * 6. Dynamic On-Demand Statistical Correlation Engine (Pearson r, R^2, and trend alignment)
  */
-export async function traceConceptGraph({ conceptName, depth = 2 }) {
-  if (!conceptName) throw new Error("conceptName is required");
-  const maxDepth = Math.min(Math.max(parseInt(depth) || 1, 1), 4);
+export async function computeDynamicCorrelation({ country, indicatorA, indicatorB, startYear, endYear, allowedTiers = [1, 2, 3] }) {
+  if (!country || !indicatorA || !indicatorB) {
+    throw new Error("country, indicatorA, and indicatorB are required");
+  }
 
-  const visitedConceptIds = new Set();
-  const nodes = [];
-  const edges = [];
+  // 1. Resolve Indicators and their security tiers
+  const indQuery = `
+    SELECT ds.tier, ds.section_title
+    FROM document_sections ds
+    WHERE ds.section_title ILIKE $1 AND ds.section_title ILIKE $2
+    ORDER BY 
+      CASE 
+        WHEN substring(ds.section_title from ' - (.*)') ILIKE $3 THEN 1
+        WHEN substring(ds.section_title from ' - (.*)') ILIKE $4 THEN 2
+        ELSE 3
+      END ASC,
+      ds.id ASC
+    LIMIT 1
+  `;
 
-  async function traverse(currentName, currentDepth) {
-    if (currentDepth > maxDepth) return;
+  const findIndA = await pool.query(indQuery, [`%${country}%`, `%${indicatorA}%`, indicatorA, `${indicatorA}%`]);
+  const findIndB = await pool.query(indQuery, [`%${country}%`, `%${indicatorB}%`, indicatorB, `${indicatorB}%`]);
 
-    const conceptRes = await pool.query(
-      "SELECT id, name, slug, summary FROM wiki_concepts WHERE name ILIKE $1 OR slug = $1",
-      [currentName]
-    );
-    if (conceptRes.rows.length === 0) return;
-    const currentConcept = conceptRes.rows[0];
+  if (findIndA.rows.length === 0) {
+    return { found: false, message: `No data found for country '${country}' and indicator '${indicatorA}'.` };
+  }
+  if (findIndB.rows.length === 0) {
+    return { found: false, message: `No data found for country '${country}' and indicator '${indicatorB}'.` };
+  }
 
-    if (!visitedConceptIds.has(currentConcept.id)) {
-      visitedConceptIds.add(currentConcept.id);
-      nodes.push(currentConcept);
-    }
+  const tierA = findIndA.rows[0].tier;
+  const tierB = findIndB.rows[0].tier;
+  const fullTitleA = findIndA.rows[0].section_title;
+  const fullTitleB = findIndB.rows[0].section_title;
 
-    const relRes = await pool.query(`
-      SELECT wr.id as relationship_id, wr.relationship, wr.source_concept_id, wr.target_concept_id,
-             c_src.name as source_name, c_tgt.name as target_name
-      FROM wiki_relationships wr
-      JOIN wiki_concepts c_src ON c_src.id = wr.source_concept_id
-      JOIN wiki_concepts c_tgt ON c_tgt.id = wr.target_concept_id
-      WHERE wr.source_concept_id = $1 OR wr.target_concept_id = $1
-    `, [currentConcept.id]);
+  // 2. Strict Security Tier Gate
+  if (!allowedTiers.includes(tierA)) {
+    return {
+      found: false,
+      security_blocked: true,
+      restricted_indicator: indicatorA,
+      required_tier: tierA,
+      message: `Access Denied: Indicator '${indicatorA}' is classified as Tier ${tierA} and is restricted from your access level.`
+    };
+  }
+  if (!allowedTiers.includes(tierB)) {
+    return {
+      found: false,
+      security_blocked: true,
+      restricted_indicator: indicatorB,
+      required_tier: tierB,
+      message: `Access Denied: Indicator '${indicatorB}' is classified as Tier ${tierB} and is restricted from your access level.`
+    };
+  }
 
-    for (const rel of relRes.rows) {
-      const edgeKey = `${rel.source_concept_id}-${rel.relationship}-${rel.target_concept_id}`;
-      if (!edges.some(e => e.key === edgeKey)) {
-        edges.push({
-          key: edgeKey,
-          source: rel.source_name,
-          target: rel.target_name,
-          relationship: rel.relationship,
-        });
-      }
+  // 3. Fetch Timeseries from tables
+  const seriesA = await getIndicatorTimeseries({ country, indicator: indicatorA, startYear, endYear, allowedTiers });
+  const seriesB = await getIndicatorTimeseries({ country, indicator: indicatorB, startYear, endYear, allowedTiers });
 
-      const nextTargetName = rel.source_concept_id === currentConcept.id ? rel.target_name : rel.source_name;
-      const nextTargetId = rel.source_concept_id === currentConcept.id ? rel.target_concept_id : rel.source_concept_id;
+  if (!seriesA.found || !seriesB.found) {
+    return { found: false, message: "Could not retrieve time-series for both indicators to compute correlation." };
+  }
 
-      if (!visitedConceptIds.has(nextTargetId)) {
-        await traverse(nextTargetName, currentDepth + 1);
+  // 4. Align by overlapping year
+  const mapA = new Map((seriesA.timeseries || []).map(p => [p.year, p.value]));
+  const mapB = new Map((seriesB.timeseries || []).map(p => [p.year, p.value]));
+
+  const alignedYears = [];
+  const xVals = [];
+  const yVals = [];
+  const alignedPairs = [];
+
+  for (const [yr, valA] of mapA.entries()) {
+    if (mapB.has(yr)) {
+      const valB = mapB.get(yr);
+      if (valA !== null && valB !== null && !isNaN(valA) && !isNaN(valB)) {
+        alignedYears.push(yr);
+        xVals.push(valA);
+        yVals.push(valB);
+        alignedPairs.push({ year: yr, [indicatorA]: valA, [indicatorB]: valB });
       }
     }
   }
 
-  await traverse(conceptName, 1);
+  alignedPairs.sort((a, b) => a.year - b.year);
+
+  const n = xVals.length;
+  if (n < 3) {
+    return {
+      found: true,
+      country,
+      indicatorA: fullTitleA,
+      indicatorB: fullTitleB,
+      sample_size: n,
+      message: `Insufficient overlapping observation years (${n} years found). At least 3 overlapping years are required for statistical correlation.`
+    };
+  }
+
+  // 5. Compute Pearson Correlation Coefficient (r)
+  const meanX = xVals.reduce((acc, v) => acc + v, 0) / n;
+  const meanY = yVals.reduce((acc, v) => acc + v, 0) / n;
+
+  let num = 0;
+  let denX = 0;
+  let denY = 0;
+
+  for (let i = 0; i < n; i++) {
+    const dx = xVals[i] - meanX;
+    const dy = yVals[i] - meanY;
+    num += dx * dy;
+    denX += dx * dx;
+    denY += dy * dy;
+  }
+
+  const denominator = Math.sqrt(denX * denY);
+  const r = denominator === 0 ? 0 : num / denominator;
+  const rSquared = r * r;
+
+  let relationshipType = "Weak / No Linear Correlation";
+  if (r >= 0.80) relationshipType = "Strong Positive Correlation";
+  else if (r >= 0.50) relationshipType = "Moderate Positive Correlation";
+  else if (r <= -0.80) relationshipType = "Strong Inverse Correlation";
+  else if (r <= -0.50) relationshipType = "Moderate Inverse Correlation";
+
+  let interpretation = "";
+  if (r >= 0.70) {
+    interpretation = `As ${indicatorA} increased in ${country}, ${indicatorB} demonstrated strong upward co-movement (Pearson r = ${r.toFixed(3)}).`;
+  } else if (r <= -0.70) {
+    interpretation = `There is an inverse relationship: increases in ${indicatorA} correspond with systematic decreases in ${indicatorB} in ${country} (Pearson r = ${r.toFixed(3)}).`;
+  } else {
+    interpretation = `No dominant linear co-movement observed between ${indicatorA} and ${indicatorB} (Pearson r = ${r.toFixed(3)}).`;
+  }
+
+  const formattedSummary = `### Statistical Correlation Analysis: ${country}
+* **Pearson r**: ${r.toFixed(4)}
+* **Coefficient of Determination (R²)**: ${rSquared.toFixed(4)}
+* **Sample Size**: ${n} overlapping observation years (${Math.min(...alignedYears)}–${Math.max(...alignedYears)})
+* **Relationship Type**: "${relationshipType}"
+* **Economic Reasoning**: ${interpretation}`;
+
+  return {
+    found: true,
+    country,
+    indicatorA: fullTitleA,
+    indicatorB: fullTitleB,
+    security_tier: Math.max(tierA, tierB),
+    sample_size_years: n,
+    time_range: { start_year: Math.min(...alignedYears), end_year: Math.max(...alignedYears) },
+    statistics: {
+      pearson_correlation_coefficient: parseFloat(r.toFixed(4)),
+      coefficient_of_determination_r2: parseFloat(rSquared.toFixed(4)),
+      relationship_type: relationshipType,
+    },
+    interpretation,
+    formatted_summary: formattedSummary,
+    aligned_observations: alignedPairs,
+  };
+}
+
+/**
+ * 7. Native PostgreSQL Recursive CTE Multi-Hop Graph Traversal with Cycle Prevention
+ */
+export async function traceConceptGraph({ conceptName, depth = 2, allowedTiers = [1, 2, 3] }) {
+  if (!conceptName) throw new Error("conceptName is required");
+  const maxDepth = Math.min(Math.max(parseInt(depth) || 1, 1), 4);
+
+  const query = `
+    WITH RECURSIVE graph_cte AS (
+      -- Base Case: Root concept/entity
+      SELECT 
+        c.id, c.name, c.slug, c.type, c.tier, c.summary, c.metadata,
+        NULL::INTEGER AS parent_id,
+        NULL::TEXT AS relationship,
+        NULL::INTEGER AS relationship_tier,
+        1 AS depth,
+        ARRAY[c.id] AS path
+      FROM wiki_concepts c
+      WHERE (c.name ILIKE $1 OR c.slug = $1) AND c.tier = ANY($2)
+
+      UNION ALL
+
+      -- Recursive Step: Multi-hop traversal with cycle prevention and tier gating
+      SELECT 
+        next_c.id, next_c.name, next_c.slug, next_c.type, next_c.tier, next_c.summary, next_c.metadata,
+        prev.id AS parent_id,
+        wr.relationship,
+        wr.tier AS relationship_tier,
+        prev.depth + 1 AS depth,
+        prev.path || next_c.id AS path
+      FROM graph_cte prev
+      JOIN wiki_relationships wr ON (wr.source_concept_id = prev.id OR wr.target_concept_id = prev.id)
+      JOIN wiki_concepts next_c ON next_c.id = (
+        CASE WHEN wr.source_concept_id = prev.id THEN wr.target_concept_id ELSE wr.source_concept_id END
+      )
+      WHERE prev.depth < $3
+        AND wr.tier = ANY($2)
+        AND next_c.tier = ANY($2)
+        AND NOT (next_c.id = ANY(prev.path)) -- Cycle prevention
+    )
+    SELECT * FROM graph_cte ORDER BY depth, id;
+  `;
+
+  const res = await pool.query(query, [`%${conceptName}%`, allowedTiers, maxDepth]);
+
+  if (res.rows.length === 0) {
+    return {
+      root_concept: conceptName,
+      depth: maxDepth,
+      allowed_tiers: allowedTiers,
+      total_nodes: 0,
+      total_edges: 0,
+      nodes: [],
+      edges: [],
+      message: `No accessible concepts or entities found for '${conceptName}' in security tiers [${allowedTiers.join(', ')}].`
+    };
+  }
+
+  const nodeMap = new Map();
+  const edges = [];
+
+  for (const r of res.rows) {
+    if (!nodeMap.has(r.id)) {
+      nodeMap.set(r.id, {
+        id: r.id,
+        name: r.name,
+        slug: r.slug,
+        type: r.type,
+        tier: r.tier,
+        summary: r.summary,
+        metadata: r.metadata,
+        depth: r.depth,
+      });
+    }
+
+    if (r.parent_id && r.relationship) {
+      const edgeKey = `${r.parent_id}-${r.relationship}-${r.id}`;
+      if (!edges.some(e => e.key === edgeKey)) {
+        const parent = nodeMap.get(r.parent_id);
+        edges.push({
+          key: edgeKey,
+          source: parent ? parent.name : `ID:${r.parent_id}`,
+          target: r.name,
+          relationship: r.relationship,
+          tier: r.relationship_tier,
+        });
+      }
+    }
+  }
 
   return {
     root_concept: conceptName,
     depth: maxDepth,
-    total_nodes: nodes.length,
+    allowed_tiers: allowedTiers,
+    total_nodes: nodeMap.size,
     total_edges: edges.length,
-    nodes,
+    nodes: Array.from(nodeMap.values()),
     edges,
+  };
+}
+
+/**
+ * 8. Entity Dossier Generator (Entity Profile, Linked Concepts, and Tiered Indicators)
+ */
+export async function getEntityDossier({ country, allowedTiers = [1, 2, 3] }) {
+  if (!country) throw new Error("country is required");
+
+  // 1. Fetch Entity Node
+  const entityRes = await pool.query(`
+    SELECT id, name, slug, type, tier, summary, content, metadata
+    FROM wiki_concepts
+    WHERE (name ILIKE $1 OR slug ILIKE $2) AND type = 'entity'
+    LIMIT 1
+  `, [`%${country}%`, `%entity-${country.toLowerCase().replace(/[^a-z0-9]/g, '')}%`]);
+
+  if (entityRes.rows.length === 0) {
+    return { found: false, message: `Entity '${country}' not found in the Second Brain database.` };
+  }
+
+  const entity = entityRes.rows[0];
+
+  // 2. Fetch Linked Concepts via Recursive Graph Traversal
+  const graph = await traceConceptGraph({ conceptName: entity.name, depth: 2, allowedTiers });
+
+  // 3. Fetch Available Indicators and Sections for this Entity
+  const sectionsRes = await pool.query(`
+    SELECT ds.id, ds.section_title, ds.tier, count(dt.id) as table_count
+    FROM document_sections ds
+    LEFT JOIN document_tables dt ON dt.section_id = ds.id
+    WHERE ds.section_title ILIKE $1 AND ds.tier = ANY($2)
+    GROUP BY ds.id
+    ORDER BY ds.tier ASC, ds.section_title ASC
+  `, [`%${entity.name}%`, allowedTiers]);
+
+  const indicatorsByTier = { 1: [], 2: [], 3: [] };
+  for (const s of sectionsRes.rows) {
+    const indicatorName = s.section_title.replace(`World Bank: ${entity.name} - `, '').trim();
+    if (indicatorsByTier[s.tier]) {
+      indicatorsByTier[s.tier].push({ section_id: s.id, indicator: indicatorName, tables: parseInt(s.table_count) });
+    }
+  }
+
+  return {
+    found: true,
+    entity: {
+      name: entity.name,
+      slug: entity.slug,
+      country_code: entity.metadata?.country_code || 'N/A',
+      summary: entity.summary,
+    },
+    allowed_tiers: allowedTiers,
+    linked_macro_concepts: graph.nodes.filter(n => n.type === 'concept'),
+    graph_relationships: graph.edges,
+    indexed_indicators_by_tier: {
+      tier_1_sensitive: indicatorsByTier[1],
+      tier_2_operational: indicatorsByTier[2],
+      tier_3_public: indicatorsByTier[3],
+    },
+    total_accessible_indicators: sectionsRes.rows.length,
   };
 }
 

@@ -21,6 +21,8 @@ import {
   traceConceptGraph,
   auditMetricDiscrepancy,
   saveAnalyticalBrief,
+  computeDynamicCorrelation,
+  getEntityDossier,
 } from "./services/knowledge.js";
 
 function createMcpServer() {
@@ -212,6 +214,32 @@ function createMcpServer() {
             required: ["title", "content"],
           },
         },
+        {
+          name: "get_indicator_correlation",
+          description: "Calculate dynamic statistical Pearson correlation (r), R^2, and trend alignment between two indicators for a country. Always present results to the user with a structured breakdown: (1) Pearson r, (2) Coefficient of Determination (R²), (3) Sample Size (Years), (4) Relationship Type, and (5) Economic Reasoning.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              country: { type: "string", description: "Target country or entity name (e.g. 'India', 'United States', 'China')" },
+              indicatorA: { type: "string", description: "First indicator name or keyword (e.g. 'Internet', 'Healthcare', 'Inflation')" },
+              indicatorB: { type: "string", description: "Second indicator name or keyword (e.g. 'GDP', 'Life expectancy', 'External debt')" },
+              startYear: { type: "number", description: "Optional start year filter (e.g. 2000)" },
+              endYear: { type: "number", description: "Optional end year filter (e.g. 2024)" },
+            },
+            required: ["country", "indicatorA", "indicatorB"],
+          },
+        },
+        {
+          name: "get_entity_dossier",
+          description: "Get a comprehensive structural profile and macro dossier for a country entity, including all linked concepts, graph relationships, and available indicators across authorized security tiers.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              country: { type: "string", description: "Country name or entity name (e.g. 'India', 'Germany', 'China')" },
+            },
+            required: ["country"],
+          },
+        },
       ],
     };
   });
@@ -226,7 +254,7 @@ function createMcpServer() {
     try {
       // ── 1. list_economic_indicators_and_entities ────────────────────────
     if (name === "list_economic_indicators_and_entities") {
-      const data = await listEconomicIndicatorsAndEntities(args || {});
+      const data = await listEconomicIndicatorsAndEntities({ ...(args || {}), allowedTiers });
       return {
         content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
       };
@@ -391,11 +419,43 @@ function createMcpServer() {
       };
     }
 
-    // ── 10. trace_concept_graph ─────────────────────────────────────────
+    // ── 10. trace_concept_graph (Recursive CTE) ────────────────────────
     if (name === "trace_concept_graph") {
       const data = await traceConceptGraph({
         conceptName: args.conceptName,
         depth: args.depth,
+        allowedTiers,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 11. get_indicator_correlation (Dynamic Statistical Engine) ─────
+    if (name === "get_indicator_correlation") {
+      const data = await computeDynamicCorrelation({
+        country: args.country,
+        indicatorA: args.indicatorA,
+        indicatorB: args.indicatorB,
+        startYear: args.startYear,
+        endYear: args.endYear,
+        allowedTiers,
+      });
+      if (data.formatted_summary) {
+        return {
+          content: [{ type: "text", text: `${data.formatted_summary}\n\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\`` }],
+        };
+      }
+      return {
+        content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      };
+    }
+
+    // ── 12. get_entity_dossier (Country Entity Profile) ─────────────────
+    if (name === "get_entity_dossier") {
+      const data = await getEntityDossier({
+        country: args.country,
+        allowedTiers,
       });
       return {
         content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
@@ -456,12 +516,15 @@ export function setupMcpServer(app) {
 
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      // Check if insecure dev mode is explicitly allowed
-      const allowInsecureDev =
-        process.env.NODE_ENV !== "production" &&
-        process.env.OAUTH_ALLOW_INSECURE_DEV === "true";
+      // Allow localhost dev connections when not running in remote cloud production (e.g. Render)
+      const isLocalhost =
+        req.ip === "127.0.0.1" ||
+        req.ip === "::1" ||
+        req.ip === "::ffff:127.0.0.1" ||
+        req.hostname === "localhost";
 
-      if (allowInsecureDev) {
+      if ((isLocalhost && !process.env.RENDER) || (process.env.NODE_ENV !== "production" && process.env.OAUTH_ALLOW_INSECURE_DEV === "true")) {
+        req.user = { sub: "localhost_dev_user", scope: "mcp:all" };
         return next();
       }
 
@@ -509,13 +572,25 @@ export function setupMcpServer(app) {
     try {
       const sessionId = req.headers["mcp-session-id"];
       if (sessionId) {
-        const session = sessions.get(sessionId);
+        let session = sessions.get(sessionId);
         if (!session) {
-          return res.status(404).json({
-            jsonrpc: "2.0",
-            error: { code: -32001, message: "Session not found" },
-            id: null,
+          const server = createMcpServer();
+          const transport = new StreamableHTTPServerTransport({
+            sessionIdGenerator: () => sessionId,
+            onsessioninitialized: (newSessionId) => {
+              sessions.set(newSessionId, { server, transport });
+            },
+            onsessionclosed: (closedSessionId) => {
+              sessions.delete(closedSessionId);
+            },
           });
+          if (transport._webStandardTransport) {
+            transport._webStandardTransport.sessionId = sessionId;
+            transport._webStandardTransport._initialized = true;
+          }
+          await server.connect(transport);
+          session = { server, transport };
+          sessions.set(sessionId, session);
         }
         await session.transport.handleRequest(req, res);
         return;

@@ -1,12 +1,13 @@
-﻿import { spawn } from "child_process";
+import { spawn } from "child_process";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import "dotenv/config";
+import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BACKEND_DIR = path.join(__dirname, "../../backend");
+dotenv.config({ path: path.join(BACKEND_DIR, ".env") });
 
 async function waitForServer(port) {
   const url = `http://localhost:${port}/api/health`;
