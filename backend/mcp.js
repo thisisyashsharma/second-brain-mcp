@@ -5,6 +5,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import { verifyAccessToken } from "./oauth.js";
 import {
   searchKnowledge,
   getConceptByName,
@@ -435,24 +436,56 @@ function createMcpServer() {
 
 
 export function setupMcpServer(app) {
-  // Authentication Middleware
-  const requireAuth = (req, res, next) => {
-    // TODO: Implement proper OAuth or authentication for production before exposing sensitive/private data publicly.
-    // Bypassing MCP_AUTH_TOKEN check for the Claude custom connector demo, as Claude's UI expects OAuth and does not support arbitrary Bearer tokens.
-    
-    // Original auth logic (currently bypassed):
-    /*
-    const expectedToken = process.env.MCP_AUTH_TOKEN;
-    if (!expectedToken) {
-      // If no token is configured, allow for local dev
+  // Authentication Middleware (OAuth 2.0 Bearer Token)
+  const requireAuth = async (req, res, next) => {
+    // CORS preflight requests bypass
+    if (req.method === "OPTIONS") return next();
+
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      // Check if insecure dev mode is explicitly allowed
+      const allowInsecureDev =
+        process.env.NODE_ENV !== "production" &&
+        process.env.OAUTH_ALLOW_INSECURE_DEV === "true";
+
+      if (allowInsecureDev) {
+        return next();
+      }
+
+      return res.status(401).json({
+        jsonrpc: "2.0",
+        error: {
+          code: -32000,
+          message: "Missing or invalid Authorization header. Bearer token required.",
+        },
+        id: null,
+      });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    // Backward compatibility with legacy static MCP_AUTH_TOKEN
+    if (process.env.MCP_AUTH_TOKEN && token === process.env.MCP_AUTH_TOKEN) {
+      req.user = { sub: "static_token_user", scope: "mcp:all" };
       return next();
     }
-    const authHeader = req.headers.authorization;
-    if (!authHeader || authHeader !== `Bearer ${expectedToken}`) {
-      return res.status(401).json({ error: "Unauthorized MCP access" });
+
+    // Verify OAuth 2.0 JWT or JWKS token
+    const verification = await verifyAccessToken(token);
+    if (!verification.valid) {
+      return res.status(401).json({
+        jsonrpc: "2.0",
+        error: {
+          code: -32000,
+          message: `Unauthorized: ${verification.error}`,
+        },
+        id: null,
+      });
     }
-    */
-    return next();
+
+    // Attach authenticated identity to request
+    req.user = verification.payload;
+    next();
   };
 
   // Map to store active sessions (sessionId -> { server, transport })

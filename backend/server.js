@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 
 import pool from "./db.js";
 import { setupMcpServer } from "./mcp.js";
+import { setupOAuthRoutes } from "./oauth.js";
 import { getConceptByName } from "./services/knowledge.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -15,6 +16,10 @@ app.use(cors());
 
 // Set up MCP Server first, so it doesn't get interfered with by body-parser
 setupMcpServer(app);
+
+// Setup OAuth 2.0 endpoints with targeted body parsing
+app.use("/oauth", express.urlencoded({ extended: true }), express.json());
+setupOAuthRoutes(app);
 
 app.use(express.json());
 
